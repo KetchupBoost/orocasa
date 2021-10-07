@@ -16,7 +16,7 @@
   };
 
   // Initialize Firebase
-  if (firebase.getApps().length === 0) {
+  if (firebase.apps.length === 0) {
     firebase.initializeApp(firebaseConfig);
   }
 </script>

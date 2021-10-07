@@ -12,16 +12,25 @@
 
   const auth = firebase.auth();
 
-  auth.onAuthStateChanged(auth, user => {
-    if (user) {
+  const getCurrentUser = auth =>
+    new Promise((resolve, reject) => {
+      const unsubscribe = auth.onAuthStateChanged(user => {
+        unsubscribe();
+        resolve(user);
+      }, reject);
+    });
+
+  getCurrentUser(auth).then(user => {
+    if (!!user)
       navigateTo('/admin');
-    }
   });
 
+  // Helpers
   const onSubmit = () => {
-    console.log('Tentando autenticar...');
-
-    auth.signInWithEmailAndPassword(auth, emailField, passwordField)
+    auth.signInWithEmailAndPassword(emailField, passwordField)
+      .then(() => {
+        navigateTo('/admin');
+      })
       .catch(error => {
         console.log(`Erro ao autenticar (${error.code}): ${error.message}`);
       });

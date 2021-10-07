@@ -7,12 +7,18 @@ import Home from '@/pages/Home.svelte';
 import Login from '@/pages/Login.svelte';
 import ProductsIndex from '@/pages/admin/products/Index.svelte';
 
-function isLoggedIn() {
-  const auth = firebase.auth();
-  const user = auth.currentUser;
+const getCurrentUser = auth =>
+  new Promise((resolve, reject) => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      unsubscribe();
+      resolve(user);
+    }, reject);
+  });
 
-  return !!user;
-}
+const isLoggedIn = async () => {
+  const auth = firebase.auth();
+  return !!await getCurrentUser(auth);
+};
 
 export const routes = [
   {

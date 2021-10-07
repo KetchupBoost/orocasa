@@ -139,6 +139,22 @@
   const handleSubmit = () => {
     const db = firebase.firestore();
 
+    // TODO: Show error messages
+    if (values.name === '') {
+      alert('Preencha o nome do produto!');
+      return;
+    }
+
+    if (values.category === null) {
+      alert('Selecione uma categoria!');
+      return;
+    }
+
+    if (values.image === '') {
+      alert('Envie uma imagem!');
+      return;
+    }
+
     if (isCreating) {
       // Create a product document on firestore
       const productRef = db
@@ -151,7 +167,8 @@
           price: values.price,
           image: values.image,
           stock: values.stock,
-          category: values.category
+          category: values.category,
+          created_in: firebase.firestore.FieldValue.serverTimestamp()
         })
         .then(() => {
           close();
@@ -169,8 +186,7 @@
           price: values.price,
           image: values.image,
           stock: values.stock,
-          category: values.category,
-          created_in: firebase.firestore.FieldValue.serverTimestamp()
+          category: values.category
         })
         .then(() => {
           close();

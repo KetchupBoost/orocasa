@@ -9,6 +9,7 @@
 
   let emailField = '';
   let passwordField = '';
+  let errorMessage = '';
 
   const auth = firebase.auth();
 
@@ -21,7 +22,21 @@
   const onSubmit = () => {
     auth.signInWithEmailAndPassword(emailField, passwordField)
       .catch(error => {
-        console.log(`Erro ao autenticar (${error.code}): ${error.message}`);
+        console.warn(`Erro ao autenticar (${error.code}): ${error.message}`);
+
+        switch (error.code) {
+          case 'auth/invalid-email':
+            errorMessage = 'E-mail inválido.';
+            break;
+          case 'auth/user-not-found':
+            errorMessage = 'Usuário não encontrado.';
+            break;
+          case 'auth/wrong-password':
+            errorMessage = 'Senha incorreta.';
+            break;
+          default:
+            errorMessage = 'Erro ao autenticar.';
+        };
       });
   };
 </script>
@@ -55,20 +70,27 @@
       bind:value={passwordField}
     />
 
+    <!-- Error Message -->
+    {#if errorMessage !== ''}
+      <span class="w-full mt-2 text-xs font-semibold text-center text-red-600">
+        {errorMessage}
+      </span>
+    {/if}
+
     <!-- Submit Button -->
     <input
       type="submit"
       value="Entrar"
-      class="flex items-center justify-center w-64 h-12 px-6 mt-8 text-sm font-semibold text-white bg-blue-600 rounded cursor-pointer hover:bg-blue-700"
+      class="flex items-center justify-center w-64 h-12 px-6 text-sm font-semibold text-white bg-blue-500 rounded cursor-pointer hover:bg-blue-600 active:bg-blue-400 {errorMessage === '' ? 'mt-8' : 'mt-2'}"
     />
 
     <!-- Alternative Options -->
     <div class="flex justify-center mt-6 text-xs">
-      <a href="#" class="text-blue-400 hover:text-blue-500">
+      <button class="text-blue-400 hover:text-blue-500 active:text-blue-300">
         Esqueci a Senha
-      </a>
+      </button>
       <span class="mx-2 text-gray-300">/</span>
-      <a href="/" class="text-blue-400 hover:text-blue-500">
+      <a href="/" class="text-blue-400 hover:text-blue-500 active:text-blue-300">
         Voltar
       </a>
     </div>

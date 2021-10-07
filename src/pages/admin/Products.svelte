@@ -42,6 +42,7 @@
   let currentCategory = '';
   let currentCategoryTitle = 'Todas as Categorias';
   let selectedSortingMode = 0;
+  let currentSearchTerm = '';
 
   let productQ = ref => ref
       .orderBy('name', 'asc');
@@ -82,10 +83,6 @@
     updateQuery();
   };
 
-  const doSearch = term => {
-    const mode = sortingModes[selectedSortingMode];
-  };
-
   const showProductEditor = (isCreating, id) => {
     open(ProductEditor, { isCreating, id });
   };
@@ -111,18 +108,30 @@
     </button>
 
     <!-- Search -->
-    <div class="relative mt-4 ml-auto mr-6 text-sm focus:outline-none sm:mt-0">
-      <div class="flex items-center justify-between h-10 border-2 border-gray-300 rounded w-50 hover:bg-gray-300">
+    <div class="relative mt-4 ml-auto mr-6 text-sm sm:mt-0">
+      <div class="flex items-center justify-between h-10 border-2 border-gray-300 rounded w-50 focus-within:border-2 focus-within:border-black">
         <input
           class="flex items-center w-full h-full px-4 bg-gray-100 rounded focus:outline-none"
           type="text"
           placeholder="Pesquisar"
+          bind:value={currentSearchTerm}
         />
-        <button class="flex items-center justify-center px-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
-        </button>
+        {#if currentSearchTerm === ''}
+          <div class="flex items-center justify-center px-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+        {:else}
+          <button
+            class="flex items-center justify-center px-2"
+            on:click={() => currentSearchTerm = ''}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        {/if}
       </div>
     </div>
 
@@ -201,45 +210,47 @@
 
     <div class="grid w-full grid-cols-1 mt-6 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 gap-x-6 gap-y-12">
       {#each products as product, i (i)}
-        <div class="product">
-          <div
-            class="block h-64 overflow-hidden bg-white rounded-lg shadow-lg cursor-pointer"
-            on:click={() => showProductEditor(false, product._id)}
-          >
+        {#if currentSearchTerm === '' || product.name.toLowerCase().includes(currentSearchTerm.toLowerCase())}
+          <div class="product">
             <div
-              class="w-full h-full product-image"
-              style="background-image: url({product.image});"
-            />
-          </div>
-          <div class="flex items-center justify-between mt-3">
-            <div class="flex flex-col">
-              <span class="font-medium">{product.name}</span>
-              <div class="flex flex-col items-start">
-                <Doc
-                  path={`categories/${product.category}`}
-                  let:data={category}
-                >
-                  <button
-                    class="text-xs font-medium text-blue-500 select-none"
-                    on:click={setCategory(product.category, category.title)}
-                  >
-                    {category.title}
-                  </button>
-                </Doc>
-                <span class="text-xs font-medium select-none">
-                  {#if product.stock > 0}
-                    {product.stock} no estoque
-                  {:else}
-                    Indisponível
-                  {/if}
-                </span>
-              </div>
+              class="block h-64 overflow-hidden bg-white rounded-lg shadow-lg cursor-pointer"
+              on:click={() => showProductEditor(false, product.id)}
+            >
+              <div
+                class="w-full h-full product-image"
+                style="background-image: url({product.image});"
+              />
             </div>
-            <span class="flex items-center h-8 px-2 text-sm text-blue-600 bg-blue-200 rounded">
-              {formatPrice(product.price)}
-            </span>
+            <div class="flex items-center justify-between mt-3">
+              <div class="flex flex-col">
+                <span class="font-medium">{product.name}</span>
+                <div class="flex flex-col items-start">
+                  <Doc
+                    path={`categories/${product.category}`}
+                    let:data={category}
+                  >
+                    <button
+                      class="text-xs font-medium text-blue-500 select-none"
+                      on:click={setCategory(product.category, category.title)}
+                    >
+                      {category.title}
+                    </button>
+                  </Doc>
+                  <span class="text-xs font-medium select-none">
+                    {#if product.stock > 0}
+                      {product.stock} em estoque
+                    {:else}
+                      Indisponível
+                    {/if}
+                  </span>
+                </div>
+              </div>
+              <span class="flex items-center h-8 px-2 text-sm text-blue-600 bg-blue-200 rounded">
+                {formatPrice(product.price)}
+              </span>
+            </div>
           </div>
-        </div>
+        {/if}
       {/each}
     </div>
 

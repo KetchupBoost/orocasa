@@ -1,22 +1,26 @@
 <script>
+  import { getContext } from 'svelte';
   import firebase from 'firebase/app';
   import 'firebase/auth';
   import { navigateTo } from 'svelte-router-spa';
 
   export let currentRoute;
 
+  const { needsAuthCheck } = getContext('app');
+
   // Log out from the current firebase session
   const logout = () => {
     firebase.auth().signOut().then(() => {
+      $needsAuthCheck = true;
       navigateTo('/login');
     });
   };
 </script>
 
 <div class="flex flex-col items-center flex-shrink-0 w-16 h-full overflow-hidden text-gray-400 bg-gray-900 md:w-48">
-  <div class="flex items-center justify-center w-full px-3 mt-3 md:justify-start">
-    <svg class="w-8 h-8 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-      <path d="M11 17a1 1 0 001.447.894l4-2A1 1 0 0017 15V9.236a1 1 0 00-1.447-.894l-4 2a1 1 0 00-.553.894V17zM15.211 6.276a1 1 0 000-1.788l-4.764-2.382a1 1 0 00-.894 0L4.789 4.488a1 1 0 000 1.788l4.764 2.382a1 1 0 00.894 0l4.764-2.382zM4.447 8.342A1 1 0 003 9.236V15a1 1 0 00.553.894l4 2A1 1 0 009 17v-5.764a1 1 0 00-.553-.894l-4-2z" />
+  <div class="flex items-center justify-center w-full pl-4 pr-3 mt-3 md:justify-start">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 fill-current" viewBox="0 0 20 20" fill="currentColor">
+      <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
     </svg>
     <span class="hidden ml-2 text-sm font-bold md:block">Oro Casa</span>
   </div>
@@ -45,7 +49,20 @@
         </svg>
         <span class="hidden ml-3 text-sm font-medium md:block">Produtos</span>
       </a>
+
+      <!-- Categories -->
+      <a
+        href="/admin/categories"
+        class="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-700 hover:text-gray-300"
+        class:active={currentRoute.path == '/admin/categories'}
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+        </svg>
+        <span class="hidden ml-3 text-sm font-medium md:block">Categorias</span>
+      </a>
     </div>
+
     <div class="flex flex-col items-center w-full mt-3 border-t border-gray-700">
       <!-- Messages -->
       <a

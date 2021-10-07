@@ -12,15 +12,7 @@
 
   const auth = firebase.auth();
 
-  const getCurrentUser = auth =>
-    new Promise((resolve, reject) => {
-      const unsubscribe = auth.onAuthStateChanged(user => {
-        unsubscribe();
-        resolve(user);
-      }, reject);
-    });
-
-  getCurrentUser(auth).then(user => {
+  auth.onAuthStateChanged(user => {
     if (!!user)
       navigateTo('/admin');
   });
@@ -28,9 +20,6 @@
   // Helpers
   const onSubmit = () => {
     auth.signInWithEmailAndPassword(emailField, passwordField)
-      .then(() => {
-        navigateTo('/admin');
-      })
       .catch(error => {
         console.log(`Erro ao autenticar (${error.code}): ${error.message}`);
       });

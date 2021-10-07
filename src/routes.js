@@ -1,24 +1,10 @@
-import firebase from 'firebase/app';
-import 'firebase/auth';
-
 import RootLayout from '@/layouts/RootLayout.svelte';
 import AdminLayout from '@/layouts/AdminLayout.svelte';
 import Home from '@/pages/Home.svelte';
 import Login from '@/pages/Login.svelte';
-import ProductsIndex from '@/pages/admin/products/Index.svelte';
-
-const getCurrentUser = auth =>
-  new Promise((resolve, reject) => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
-      unsubscribe();
-      resolve(user);
-    }, reject);
-  });
-
-const isLoggedIn = async () => {
-  const auth = firebase.auth();
-  return !!await getCurrentUser(auth);
-};
+import AdminEstimates from '@/pages/admin/Estimates.svelte';
+import AdminProducts from '@/pages/admin/Products.svelte';
+import AdminCategories from '@/pages/admin/Categories.svelte';
 
 export const routes = [
   {
@@ -27,30 +13,29 @@ export const routes = [
     layout: RootLayout,
   },
   {
-    name: 'login',
+    name: '/login',
     component: Login,
     layout: RootLayout
   },
   {
-    name: 'admin',
+    name: '/admin',
     component: AdminLayout,
-    onlyIf: {
-      guard: isLoggedIn,
-      redirect: '/login'
-    },
     nestedRoutes: [
       {
         name: 'index',
-        redirectTo: '/admin/products'
+        redirectTo: '/admin/estimates'
+      },
+      {
+        name: 'estimates',
+        component: AdminEstimates
       },
       {
         name: 'products',
-        nestedRoutes: [
-          {
-            name: 'index',
-            component: ProductsIndex
-          }
-        ]
+        component: AdminProducts
+      },
+      {
+        name: 'categories',
+        component: AdminCategories
       }
     ]
   }

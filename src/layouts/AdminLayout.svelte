@@ -9,17 +9,13 @@
 
   export let currentRoute;
 
-  let isWaitingForAuth = true;
+  let isWaitingForAuth = $needsAuthCheck;
 
   const { needsAuthCheck } = getContext('app');
   const auth = firebase.auth();
 
   // Auth guard
   auth.onAuthStateChanged(user => {
-    if (!$needsAuthCheck) {
-      isWaitingForAuth = false;
-    }
-
     if (!user) {
       navigateTo('/login');
     } else {

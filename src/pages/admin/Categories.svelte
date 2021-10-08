@@ -132,7 +132,7 @@
         <Collection path={'categories'} let:data={categories}>
           {#each categories as category, i (i)}
             <tr class="flex w-full bg-white rounded-lg shadow-md space-between">
-              <td class="flex items-center flex-shrink-0 w-20 col-span-3 p-3 md:w-full">
+              <td class="flex items-center flex-shrink-0 w-20 col-span-3 p-3 md:flex-shrink md:w-full">
                 <span class="ml-3">{category.title}</span>
               </td>
               <td class="flex items-center justify-center w-20 p-3 ml-auto md:justify-start">

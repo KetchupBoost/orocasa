@@ -135,7 +135,7 @@
               <td class="flex items-center flex-shrink-0 w-20 col-span-3 p-3 md:flex-shrink md:w-full">
                 <span class="ml-3">{category.title}</span>
               </td>
-              <td class="flex items-center justify-center w-20 p-3 ml-auto md:justify-start">
+              <td class="flex items-center justify-center w-20 p-3 ml-auto md:flex-shrink-0 md:justify-start">
                 {#await getItemCount(i)}
                   ...
                 {:then count}
@@ -144,7 +144,7 @@
                   ???
                 {/await}
               </td>
-              <td class="flex items-center justify-center w-40 p-3 space-x-3">
+              <td class="flex items-center justify-center w-40 p-3 space-x-3 md:flex-shrink-0">
                 <button
                   title="Editar"
                   class="flex items-center justify-center p-2 bg-blue-500 rounded text-blue-50 hover:bg-blue-600 active:bg-blue-600"

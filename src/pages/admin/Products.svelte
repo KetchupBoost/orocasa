@@ -88,12 +88,12 @@
   };
 </script>
 
-<main class="flex flex-col w-screen min-h-screen p-8 overflow-y-scroll text-gray-800 bg-gray-100">
+<main class="flex flex-col w-screen min-h-screen p-8 overflow-y-auto text-gray-800 bg-gray-100">
   <!-- Header -->
   <h1 class="text-3xl">Produtos</h1>
 
   <!-- Grid Options -->
-  <div class="flex flex-col mt-6 grid-options sm:flex-row sm:items-end sm:justify-between">
+  <div class="flex flex-col mt-6 sm:flex-row sm:items-end sm:justify-between">
     <!-- New Product -->
     <button
       class="relative mt-4 text-sm focus:outline-none sm:mt-0"
@@ -277,6 +277,13 @@
 </main>
 
 <style scoped>
+  .grid:after {
+    content: '';
+    display: block;
+    height: 35px;
+    width: 100%;
+  }
+
   .group:focus .group-focus\:flex,
   .group-focus\:flex:active {
     display: flex;

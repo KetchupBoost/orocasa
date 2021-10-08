@@ -57,6 +57,18 @@
     return formatter.format(price);
   }
 
+  const filterSearch = (items, term) => {
+    if (term === '')
+      return items;
+
+    return items.filter(item => {
+      const name = item.name.toLowerCase();
+      const searchTerm = term.toLowerCase();
+
+      return name.includes(searchTerm);
+    });
+  };
+
   const updateQuery = async () => {
     const mode = sortingModes[selectedSortingMode];
 
@@ -152,11 +164,15 @@
         >
           Todas as Categorias
         </button>
-        <Collection path={'categories'} let:data={categories}>
+        <Collection
+          path={'categories'}
+          query={ref => ref.orderBy('title')}
+          let:data={categories}
+        >
           {#each categories as category, i (i)}
             <button
               class="w-full px-4 py-2 text-left hover:bg-gray-200"
-              on:click={() => setCategory(i, category.title)}
+              on:click={() => setCategory(parseInt(category.id), category.title)}
             >
               {category.title}
             </button>
@@ -190,61 +206,69 @@
 
   <!-- Grid -->
   <Collection path={'products'} query={productQ} let:data={products}>
-    <div slot="loading">
-      <div class="flex items-center justify-center w-full h-80">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-gray-400 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
-        </svg>
-      </div>
+    <div slot="loading" class="flex items-center justify-center w-full h-full">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-gray-500 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
+      </svg>
     </div>
 
-    <div slot="fallback">
-      <h1>Erro ao carregar dados.</h1>
+    <div slot="fallback" class="flex flex-col items-center justify-center w-full h-full space-y-3 text-gray-500">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <span class="font-semibold text-md">Erro ao carregar dados!</span>
     </div>
+
+    {#if filterSearch(products, currentSearchTerm).length === 0}
+      <div class="flex flex-col items-center justify-center w-full h-full space-y-3 text-gray-500">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span class="font-semibold text-md">Nenhum produto encontrado.</span>
+      </div>
+    {/if}
 
     <div class="grid w-full grid-cols-1 mt-6 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 gap-x-6 gap-y-12">
-      {#each products as product, i (i)}
-        {#if currentSearchTerm === '' || product.name.toLowerCase().includes(currentSearchTerm.toLowerCase())}
-          <div class="product">
+      {#each filterSearch(products, currentSearchTerm) as product, i (i)}
+        <div class="product">
+          <div
+            class="block h-64 overflow-hidden bg-white rounded-lg shadow-lg cursor-pointer"
+            on:click={() => showProductEditor(false, product.id)}
+          >
             <div
-              class="block h-64 overflow-hidden bg-white rounded-lg shadow-lg cursor-pointer"
-              on:click={() => showProductEditor(false, product.id)}
-            >
-              <div
-                class="w-full h-full product-image"
-                style="background-image: url({product.image});"
-              />
-            </div>
-            <div class="flex items-center justify-between mt-3">
-              <div class="flex flex-col">
-                <span class="font-medium">{product.name}</span>
-                <div class="flex flex-col items-start">
-                  <Doc
-                    path={`categories/${product.category}`}
-                    let:data={category}
-                  >
-                    <button
-                      class="text-xs font-medium text-blue-500 select-none"
-                      on:click={setCategory(product.category, category.title)}
-                    >
-                      {category.title}
-                    </button>
-                  </Doc>
-                  <span class="text-xs font-medium select-none">
-                    {#if product.stock > 0}
-                      {product.stock} em estoque
-                    {:else}
-                      Indisponível
-                    {/if}
-                  </span>
-                </div>
-              </div>
-              <span class="flex items-center h-8 px-2 text-sm text-blue-600 bg-blue-200 rounded">
-                {formatPrice(product.price)}
-              </span>
-            </div>
+              class="w-full h-full product-image"
+              style="background-image: url({product.image});"
+            />
           </div>
-        {/if}
+          <div class="flex items-center justify-between mt-3">
+            <div class="flex flex-col">
+              <span class="font-medium">{product.name}</span>
+              <div class="flex flex-col items-start">
+                <Doc
+                  path={`categories/${product.category}`}
+                  let:data={category}
+                >
+                  <button
+                    class="text-xs font-medium text-blue-500 select-none"
+                    on:click={setCategory(product.category, category.title)}
+                  >
+                    {category.title}
+                  </button>
+                </Doc>
+                <span class="text-xs font-medium select-none">
+                  {#if product.stock > 0}
+                    {product.stock} em estoque
+                  {:else}
+                    Indisponível
+                  {/if}
+                </span>
+              </div>
+            </div>
+            <span class="flex items-center h-8 px-2 text-sm text-blue-600 bg-blue-200 rounded">
+              {formatPrice(product.price)}
+            </span>
+          </div>
+        </div>
       {/each}
     </div>
   </Collection>

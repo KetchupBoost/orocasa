@@ -125,17 +125,17 @@
         <tr class="flex justify-between">
           <th class="w-full col-span-3 p-3 ml-3 text-left">Nome</th>
           <th class="flex-shrink-0 w-20 p-3 ml-auto text-left">Itens</th>
-          <th class="flex-shrink-0 w-40 col-span-2 p-3">Ações</th>
+          <th class="flex-shrink-0 w-20 col-span-2 p-3 text-left md:text-center md:w-40">Ações</th>
         </tr>
       </thead>
       <tbody class="flex flex-col space-y-3 flex-rol">
         <Collection path={'categories'} let:data={categories}>
           {#each categories as category, i (i)}
             <tr class="flex w-full bg-white rounded-lg shadow-md space-between">
-              <td class="flex items-center col-span-3 p-3">
+              <td class="flex items-center flex-shrink-0 w-20 col-span-3 p-3 md:w-full">
                 <span class="ml-3">{category.title}</span>
               </td>
-              <td class="flex items-center w-20 p-3 ml-auto">
+              <td class="flex items-center justify-center w-20 p-3 ml-auto md:justify-start">
                 {#await getItemCount(i)}
                   ...
                 {:then count}

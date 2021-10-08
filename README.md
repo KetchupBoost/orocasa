@@ -22,3 +22,14 @@ Your app is ready to be deployed!
 ### Q: What about Eject?
 
 No eject needed! Snowpack guarantees zero lock-in, and CSA strives for the same.
+
+
+# Info
+
+ - Orçamento
+   - Colunas da tabela: 16
+    - Ambiente/Imagem: 4
+    - Descrição: 5
+    - Quantidade: 1
+    - Valor Unitário: 3
+    - Valor Total: 3

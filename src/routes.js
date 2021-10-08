@@ -3,6 +3,7 @@ import AdminLayout from '@/layouts/AdminLayout.svelte';
 import Home from '@/pages/Home.svelte';
 import Login from '@/pages/Login.svelte';
 import AdminEstimates from '@/pages/admin/Estimates.svelte';
+import AdminEstimatesEditor from '@/pages/admin/EstimatesEditor.svelte';
 import AdminProducts from '@/pages/admin/Products.svelte';
 import AdminCategories from '@/pages/admin/Categories.svelte';
 
@@ -27,7 +28,11 @@ export const routes = [
       },
       {
         name: 'estimates',
-        component: AdminEstimates
+        component: AdminEstimates,
+      },
+      {
+        name: 'editor',
+        component: AdminEstimatesEditor
       },
       {
         name: 'products',

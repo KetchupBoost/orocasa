@@ -17,15 +17,33 @@
   };
 </script>
 
-<div class="flex flex-col items-center flex-shrink-0 w-16 h-full overflow-hidden text-gray-400 bg-gray-900 md:w-48">
-  <div class="flex items-center justify-center w-full pl-4 pr-3 mt-3 md:justify-start">
+<div class="flex flex-col items-center flex-shrink-0 w-16 h-full overflow-hidden overflow-y-auto text-gray-400 bg-gray-900 md:w-48">
+  <div class="flex items-center justify-between w-full pl-4 pr-3 mt-3 md:justify-start">
     <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 fill-current" viewBox="0 0 20 20" fill="currentColor">
       <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
     </svg>
-    <span class="hidden ml-2 text-sm font-bold md:block">Oro Casa</span>
+    <span class="hidden w-full text-sm font-bold text-center md:block">Oro Casa</span>
   </div>
-  <div class="w-full px-2">
-    <div class="flex flex-col items-center w-full mt-3 border-t border-gray-700">
+  <div class="flex flex-col items-center w-full px-2">
+    <!-- <div class="w-4/5 h-[1px] bg-gray-700 mt-6"/> -->
+
+    <div class="flex flex-col items-center w-full mt-6 mb-3">
+      <!-- Create new Estimate -->
+      <a
+        href="/admin/estimates/new"
+        class="flex items-center w-full h-12 px-3 text-gray-100 bg-blue-500 rounded hover:bg-blue-600 active:bg-blue-400"
+        class:active={currentRoute.path == '/admin/estimates'}
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+        <span class="hidden ml-3 text-sm font-medium md:block">Novo Orçamento</span>
+      </a>
+    </div>
+
+    <div class="w-4/5 h-[1px] bg-gray-700 mt-3"/>
+
+    <div class="flex flex-col items-center w-full mt-3border-gray-700">
       <!-- Estimates -->
       <a
         href="/admin/estimates"
@@ -63,7 +81,9 @@
       </a>
     </div>
 
-    <div class="flex flex-col items-center w-full mt-3 border-t border-gray-700">
+    <div class="w-4/5 h-[1px] bg-gray-700 mt-3"/>
+
+    <div class="flex flex-col items-center w-full">
       <!-- Messages -->
       <a
         href="/admin/messages"
@@ -78,8 +98,9 @@
       </a>
     </div>
   </div>
+
   <button
-    class="flex items-center justify-center w-full h-16 mt-auto bg-gray-800 hover:bg-gray-700 hover:text-gray-300"
+    class="flex items-center justify-center flex-shrink-0 w-full h-16 mt-6 bg-gray-800 md:mt-auto hover:bg-gray-700 hover:text-gray-300"
     on:click={logout}
   >
     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

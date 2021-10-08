@@ -100,7 +100,7 @@
   };
 </script>
 
-<main class="flex flex-col w-screen min-h-screen p-8 overflow-y-auto text-gray-800 bg-gray-100">
+<main class="flex flex-col w-screen min-h-screen p-4 pt-8 overflow-y-auto text-gray-800 bg-gray-50 md:p-8">
   <!-- Header -->
   <h1 class="text-3xl">Produtos</h1>
 
@@ -111,7 +111,7 @@
       class="relative w-full mt-4 text-sm lg:w-auto focus:outline-none sm:mt-0"
       on:click={() => showProductEditor(true)}
     >
-      <div class="flex items-center justify-start w-full h-10 px-3 text-gray-100 bg-blue-500 rounded lg:justify-between lg:w-40 hover:bg-blue-600 active:bg-blue-400">
+      <div class="flex items-center justify-start w-full h-10 px-3 text-gray-100 rounded bg-main-500 lg:justify-between lg:w-40 hover:bg-main-600 active:bg-main-400">
         <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
         </svg>
@@ -123,7 +123,7 @@
     <div class="relative w-full mt-4 ml-auto mr-6 text-sm lg:pl-6 lg:w-auto lg:mt-0">
       <div class="flex items-center justify-between w-full h-10 border-2 border-gray-300 rounded lg:w-50 focus-within:border-2 focus-within:border-black">
         <input
-          class="flex items-center w-full h-full px-4 bg-gray-100 rounded focus:outline-none"
+          class="flex items-center w-full h-full px-4 rounded bg-gray-50 focus:outline-none"
           type="text"
           placeholder="Pesquisar por Nome"
           bind:value={currentSearchTerm}
@@ -236,7 +236,7 @@
             on:click={() => showProductEditor(false, product.id)}
           >
             <div
-              class="w-full h-full product-image"
+              class="w-full h-full bg-center bg-no-repeat bg-contain product-image"
               style="background-image: url({product.image});"
             />
           </div>
@@ -249,7 +249,7 @@
                   let:data={category}
                 >
                   <button
-                    class="text-xs font-medium text-blue-500 select-none"
+                    class="text-xs font-medium select-none text-main-500"
                     on:click={setCategory(product.category, category.title)}
                   >
                     {category.title}
@@ -264,7 +264,7 @@
                 </span>
               </div>
             </div>
-            <span class="flex items-center h-8 px-2 text-sm text-blue-600 bg-blue-200 rounded">
+            <span class="flex items-center h-8 px-2 text-sm rounded text-main-600 bg-main-200 whitespace-nowrap">
               {formatPrice(product.price)}
             </span>
           </div>
@@ -288,13 +288,11 @@
   }
 
   .product-image {
-    background-size: 100%;
-    background-position: 50% 50%;
-    background-repeat: no-repeat;
-    transition: all 0.2s ease-out;
+    transform: scale(0.9);
+    transition: transform 0.2s ease-out;
   }
 
   .product-image:hover {
-    background-size: 110%;
+    transform: scale(1);
   }
 </style>

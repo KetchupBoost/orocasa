@@ -38,8 +38,6 @@
     max: 9999999.99,
   };
 
-  const { close } = getContext('simple-modal');
-
   onMount(() => {
     const db = firebase.firestore();
 
@@ -75,6 +73,8 @@
   });
 
   // Helpers
+  const { close } = getContext('simple-modal');
+
   const decreaseStock = () => {
     values.stock--;
   };
@@ -249,7 +249,7 @@
       <label for="stock" class="label">Estoque</label>
       <div class="flex items-center justify-between w-full h-10 gap-2 mt-1">
         <button
-          class="w-10 bg-blue-500 button hover:bg-blue-600 active:bg-blue-400"
+          class="w-10 bg-main-500 button hover:bg-main-600 active:bg-main-400"
           title="Diminuir"
           on:click={decreaseStock}
           disabled={values.stock === 0 || values.stock === null}
@@ -266,7 +266,7 @@
           on:change={handleStockChange}
         />
         <button
-          class="w-10 bg-blue-500 button hover:bg-blue-600 active:bg-blue-400"
+          class="w-10 bg-main-500 button hover:bg-main-600 active:bg-main-400"
           title="Aumentar"
           on:click={increaseStock}
         >
@@ -345,7 +345,7 @@
       {:else}
         <div class="flex items-center justify-center w-full h-60">
           <div
-            class="relative h-full bg-center bg-cover group w-60"
+            class="relative h-full bg-center bg-no-repeat bg-contain group w-60"
             style="background-image: url({values.image});"
             on:click={handleImageClick}
           >
@@ -363,7 +363,7 @@
     </div>
     <div class="h-10 col-span-4 mt-3">
       <button
-        class="w-full font-medium bg-blue-500 button hover:bg-blue-600 active:bg-blue-400"
+        class="w-full font-medium bg-main-500 button hover:bg-main-600 active:bg-main-400"
         on:click={handleSubmit}
       >
         {isCreating ? 'Criar Produto' : 'Salvar Alterações'}
@@ -395,7 +395,7 @@
   }
 
   .button:disabled {
-    @apply bg-blue-300;
+    @apply bg-main-300;
   }
 
   input::-webkit-outer-spin-button,

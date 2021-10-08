@@ -15,7 +15,7 @@
   };
 
   const categoryNameOptions = {
-    mask: /^[A-Za-zÀ-ÖØ-öø-ÿ\-\s]+$/
+    mask: /^[A-Za-zÀ-ÖØ-öø-ÿ\-\(\)\[\]\s]+$/
   };
 
   const { close } = getContext('simple-modal');
@@ -117,7 +117,7 @@
     <!-- Submit -->
     <div class="h-10 col-span-4 mt-3">
       <button
-        class="flex items-center justify-center flex-shrink-0 w-full h-full text-sm font-medium text-white bg-blue-500 rounded disabled:bg-blue-300 hover:bg-blue-600 active:bg-blue-400"
+        class="flex items-center justify-center flex-shrink-0 w-full h-full text-sm font-medium text-white rounded bg-main-500 disabled:bg-main-300 hover:bg-main-600 active:bg-main-400"
         on:click={handleSubmit}
         disabled={isBusy}
       >

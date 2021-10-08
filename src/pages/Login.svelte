@@ -41,7 +41,7 @@
   };
 </script>
 
-<main class="flex flex-col items-center justify-center w-screen h-screen text-gray-700 bg-gray-200">
+<main class="flex flex-col items-center justify-center w-screen h-screen text-gray-700 bg-main-50">
   <!-- Form -->
   <form
     class="flex flex-col p-10 mt-12 bg-white rounded shadow-lg"
@@ -54,7 +54,7 @@
     <input
       type="text"
       name="email"
-      class="flex items-center w-64 h-12 px-4 mt-2 bg-gray-200 rounded focus:outline-none focus:ring-2"
+      class="flex items-center w-64 h-12 px-4 mt-2 bg-gray-200 rounded focus:outline-none focus:ring-2 ring-main-400"
       autofocus
       bind:value={emailField}
     />
@@ -66,7 +66,7 @@
     <input
       type="password"
       name="password"
-      class="flex items-center w-64 h-12 px-4 mt-2 bg-gray-200 rounded focus:outline-none focus:ring-2"
+      class="flex items-center w-64 h-12 px-4 mt-2 bg-gray-200 rounded focus:outline-none focus:ring-2 ring-main-400"
       bind:value={passwordField}
     />
 
@@ -81,16 +81,16 @@
     <input
       type="submit"
       value="Entrar"
-      class="flex items-center justify-center w-64 h-12 px-6 text-sm font-semibold text-white bg-blue-500 rounded cursor-pointer hover:bg-blue-600 active:bg-blue-400 {errorMessage === '' ? 'mt-8' : 'mt-2'}"
+      class="flex items-center justify-center w-64 h-12 px-6 text-sm font-semibold text-white bg-main-500 rounded cursor-pointer hover:bg-main-600 active:bg-main-400 {errorMessage === '' ? 'mt-8' : 'mt-2'}"
     />
 
     <!-- Alternative Options -->
     <div class="flex justify-center mt-6 text-xs">
-      <button class="text-blue-400 hover:text-blue-500 active:text-blue-300">
+      <button class="text-main-400 hover:text-main-500 active:text-main-300">
         Esqueci a Senha
       </button>
       <span class="mx-2 text-gray-300">/</span>
-      <a href="/" class="text-blue-400 hover:text-blue-500 active:text-blue-300">
+      <a href="/" class="text-main-400 hover:text-main-500 active:text-main-300">
         Voltar
       </a>
     </div>

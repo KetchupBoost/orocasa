@@ -91,7 +91,7 @@
   };
 </script>
 
-<main class="flex flex-col w-screen min-h-screen p-8 overflow-y-auto text-gray-800 bg-gray-100">
+<main class="flex flex-col w-screen min-h-screen p-4 pt-8 overflow-y-auto text-gray-800 bg-gray-50 md:p-8">
   <!-- Header -->
   <h1 class="text-3xl">Categorias</h1>
 
@@ -102,7 +102,7 @@
       class="relative w-full mt-4 text-sm lg:w-auto focus:outline-none sm:mt-0"
       on:click={() => showCategoryEditor(true)}
     >
-      <div class="flex items-center justify-start w-full h-10 px-3 text-gray-100 bg-blue-500 rounded lg:justify-between lg:w-40 hover:bg-blue-600 active:bg-blue-400">
+      <div class="flex items-center justify-start w-full h-10 px-3 text-gray-100 rounded bg-main-500 lg:justify-between lg:w-40 hover:bg-main-600 active:bg-main-400">
         <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
         </svg>
@@ -144,9 +144,9 @@
     <table class="flex flex-col space-y-3 text-sm text-gray-700">
       <thead class="sticky text-gray-700 bg-white rounded-lg shadow-lg top-[-15px] uppercase">
         <tr class="flex justify-between">
-          <th class="w-full col-span-3 p-3 ml-3 text-left">Nome</th>
-          <th class="flex-shrink-0 w-20 p-3 ml-auto text-left">Itens</th>
-          <th class="flex-shrink-0 w-20 col-span-2 p-3 text-left md:text-center md:w-40">Ações</th>
+          <th class="w-20 col-span-3 p-3 ml-3 text-left md:w-full">Nome</th>
+          <th class="flex-shrink-0 w-20 py-3 text-left md:p-3 md:ml-auto">Itens</th>
+          <th class="flex-shrink-0 w-20 col-span-2 py-3 text-left md:p-3 md:text-center md:w-40">Ações</th>
         </tr>
       </thead>
       <tbody class="flex flex-col space-y-3 flex-rol">
@@ -180,9 +180,9 @@
           {#each filterSearch(categories, currentSearchTerm) as category, i (i)}
             <tr class="flex w-full bg-white rounded-lg shadow-md space-between">
               <td class="flex items-center flex-shrink-0 w-20 col-span-3 p-3 md:flex-shrink md:w-full">
-                <span class="ml-3">{category.title}</span>
+                <span class="ml-3 text-sm font-semibold">{category.title}</span>
               </td>
-              <td class="flex items-center justify-center w-20 p-3 ml-auto md:flex-shrink-0 md:justify-start">
+              <td class="flex items-center justify-center w-20 p-3 ml-auto text-sm font-semibold md:flex-shrink-0 md:justify-start">
                 {#await getItemCount(parseInt(category.id))}
                   ...
                 {:then count}

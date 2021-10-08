@@ -9,6 +9,7 @@
   export let isCreating = false;
   export let id;
 
+  let isBusy = false;
   let values = {
     title: ''
   };
@@ -24,12 +25,16 @@
 
     // If we're editing an existing category, fetch its data
     if (!isCreating && id) {
+      isBusy = true;
+
       db.collection('categories')
         .doc(id)
         .get()
         .then(doc => {
           const { title } = doc.data();
           values.title = title;
+
+          isBusy = false;
         });
     };
   });
@@ -43,6 +48,8 @@
       alert('Preencha o título da categoria!');
       return;
     }
+
+    isBusy = true;
 
     if (isCreating) {
       // Get the id of the last created category
@@ -68,6 +75,7 @@
             })
             .catch(err => {
               alert(`Erro ao criar categoria: ${err}`);
+              isBusy = false;
             });
         });
     } else {
@@ -83,6 +91,7 @@
         })
         .catch(err => {
           alert(`Erro ao atualizar categoria: ${err}`);
+          isBusy = false;
         });
     }
   };
@@ -110,6 +119,7 @@
       <button
         class="flex items-center justify-center flex-shrink-0 w-full h-full text-sm font-medium text-white bg-blue-500 rounded disabled:bg-blue-300 hover:bg-blue-600 active:bg-blue-400"
         on:click={handleSubmit}
+        disabled={isBusy}
       >
         {isCreating ? 'Criar Categoria' : 'Salvar Alterações'}
       </button>

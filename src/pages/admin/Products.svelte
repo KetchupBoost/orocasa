@@ -125,7 +125,7 @@
         <input
           class="flex items-center w-full h-full px-4 bg-gray-100 rounded focus:outline-none"
           type="text"
-          placeholder="Pesquisar"
+          placeholder="Pesquisar por Nome"
           bind:value={currentSearchTerm}
         />
         {#if currentSearchTerm === ''}

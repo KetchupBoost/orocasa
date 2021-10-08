@@ -289,11 +289,15 @@
             </svg>
           </div>
           <div class="absolute z-10 flex-col items-start hidden w-full pb-1 bg-white rounded shadow-lg group-focus:flex">
-            <Collection path={'categories'} let:data={categories}>
+            <Collection
+              path={'categories'}
+              query={ref => ref.orderBy('title', 'asc')}
+              let:data={categories}
+            >
               {#each categories as category, i (i)}
                 <button
                   class="w-full px-4 py-2 text-left hover:bg-gray-200"
-                  on:click={() => setCategory(i, category.title)}
+                  on:click={() => setCategory(parseInt(category.id), category.title)}
                 >
                   {category.title}
                 </button>

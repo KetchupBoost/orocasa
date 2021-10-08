@@ -46,39 +46,48 @@
     open(CategoryEditor, { isCreating, id });
   };
 
-  const deleteCategory = async (id, title) => {
+  const deleteCategory = (id, title) => {
     if (!confirm(`Tem certeza que deseja excluir a categoria "${title}"?\r\nIsto também resultará na EXCLUSÃO de TODOS OS PRODUTOS da mesma.`))
       return;
 
     const db = firebase.firestore();
 
     // Delete the products of the category
-    const products = await db
+    db
       .collection('products')
       .where('category', '==', parseInt(id))
-      .get();
+      .get()
+      .then(snapshot => {
+        snapshot.forEach(product => {
+          // First delete their image
+          firebase
+            .storage()
+            .refFromURL(product.data().image)
+            .delete()
+            .then(() => {
+              // Then delete the product
+              db
+                .collection('products')
+                .doc(product.id)
+                .delete()
+                .catch(error => {
+                  alert(`Erro ao excluir o produto "${product.data().title}": ${error.message}`);
+                });
+            })
+            .catch(error => {
+              alert(`Erro ao excluir a imagem do produto "${product.data().title}": ${error.message}`);
+            });
+        });
 
-    products.forEach(async product => {
-      // First delete their image
-      await firebase
-        .storage()
-        .refFromURL(product.data().image)
-        .delete();
-
-      // Then delete the product
-      db
-        .collection('products')
-        .doc(product.id)
-        .delete();
-    });
-
-    // Then delete the category
-    db
-      .collection('categories')
-      .doc(id)
-      .delete();
-
-    alert(`A categoria "${title}" foi excluída com sucesso.`);
+        // Then delete the category
+        db
+          .collection('categories')
+          .doc(id)
+          .delete()
+          .catch(error => {
+            alert(`Erro ao excluir a categoria: ${error.message}`);
+          });
+      });
   };
 </script>
 
@@ -107,7 +116,7 @@
         <input
           class="flex items-center w-full h-full px-4 bg-gray-100 rounded focus:outline-none"
           type="text"
-          placeholder="Pesquisar"
+          placeholder="Pesquisar por Nome"
           bind:value={currentSearchTerm}
         />
         {#if currentSearchTerm === ''}

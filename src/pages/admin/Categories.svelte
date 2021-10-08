@@ -75,23 +75,23 @@
   <h1 class="text-3xl">Categorias</h1>
 
   <!-- Table Options -->
-  <div class="flex flex-col mt-6 sm:flex-row sm:items-end sm:justify-between">
+  <div class="flex flex-col mt-6 lg:flex-row lg:items-end lg:justify-between">
     <!-- New Product -->
     <button
-      class="relative mt-4 text-sm focus:outline-none sm:mt-0"
+      class="relative w-full mt-4 text-sm lg:w-auto focus:outline-none sm:mt-0"
       on:click={() => showCategoryEditor(true)}
     >
-      <div class="flex items-center justify-between w-40 h-10 px-3 text-gray-100 bg-blue-500 rounded hover:bg-blue-600 active:bg-blue-400">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <div class="flex items-center justify-start w-full h-10 px-3 text-gray-100 bg-blue-500 rounded lg:justify-between lg:w-40 hover:bg-blue-600 active:bg-blue-400">
+        <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
         </svg>
-        <span class="font-medium">Nova Categoria</span>
+        <span class="w-full font-medium text-center">Nova Categoria</span>
       </div>
     </button>
 
     <!-- Search -->
-    <div class="relative mt-4 ml-auto mr-6 text-sm sm:mt-0">
-      <div class="flex items-center justify-between h-10 border-2 border-gray-300 rounded w-50 focus-within:border-2 focus-within:border-black">
+    <div class="relative w-full mt-4 ml-auto text-sm lg:pl-6 lg:w-auto lg:mt-0">
+      <div class="flex items-center justify-between w-full h-10 border-2 border-gray-300 rounded lg:w-50 focus-within:border-2 focus-within:border-black">
         <input
           class="flex items-center w-full h-full px-4 bg-gray-100 rounded focus:outline-none"
           type="text"

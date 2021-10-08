@@ -23,7 +23,7 @@
 
   // Input masks
   const productNameOptions = {
-    mask: /^[a-zA-Z0-9\s]+$/
+    mask: /^[A-Za-zÀ-ÖØ-öø-ÿ0-9\s]+$/
   };
   const productPriceOptions = {
     mask: Number,
@@ -231,12 +231,12 @@
     <!-- Price -->
     <div class="col-span-full md:col-span-2">
       <label for="price" class="label">Preço</label>
-      <div class="flex items-center w-full h-10 gap-2 px-4 mt-1 overflow-hidden text-sm border-2 rounded focus-within:border-black focus-within:border-2 focus-within:px-[15px]">
-        <span class="leading-4 select-none">R$</span>
+      <div class="border-box flex items-center w-full h-10 gap-2 px-4 mt-1 overflow-hidden text-sm border-2 rounded focus-within:border-black focus-within:border-2 focus-within:px-[16px]">
+        <span class="select-none">R$</span>
         <InputMask
           type="text"
           name="price"
-          class="w-full py-3 leading-4 focus:outline-none"
+          class="w-full py-3 focus:outline-none"
           unmask="typed"
           imask={productPriceOptions}
           bind:value={values.price}
@@ -317,7 +317,7 @@
       />
       {#if values.image === ''}
         <div
-          class="flex flex-col w-full mt-1 border-4 border-dashed cursor-pointer group {!imageIsUploading && 'hover:bg-gray-100 hover:border-gray-300'}"
+          class="flex flex-col w-full mt-1 border-4 border-dashed group {imageIsUploading ? 'cursor-wait' : 'cursor-pointer hover:bg-gray-100 hover:border-gray-300'}"
           on:click={handleImageClick}
         >
           <div class="flex flex-col items-center justify-center py-6">
@@ -325,12 +325,16 @@
               <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-gray-400 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
               </svg>
-              <span class="pt-1 text-sm font-semibold tracking-wider text-gray-400 select-none">Enviando...</span>
+              <span class="pt-1 text-sm font-semibold tracking-wider text-gray-400 select-none">
+                Enviando...
+              </span>
             {:else}
               <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-gray-400 group-hover:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
               </svg>
-              <span class="pt-1 text-sm font-semibold tracking-wider text-gray-400 select-none group-hover:text-gray-600">Enviar uma imagem</span>
+              <span class="pt-1 text-sm font-semibold tracking-wider text-gray-400 select-none group-hover:text-gray-600">
+                Enviar uma imagem
+              </span>
             {/if}
           </div>
         </div>
@@ -345,7 +349,9 @@
               <svg xmlns="http://www.w3.org/2000/svg" class="invisible w-12 h-12 text-gray-400 group-hover:text-gray-600 group-hover:visible" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
               </svg>
-              <span class="invisible pt-1 text-sm font-semibold tracking-wider text-gray-400 select-none group-hover:text-gray-600 group-hover:visible">Alterar imagem</span>
+              <span class="invisible pt-1 text-sm font-semibold tracking-wider text-gray-400 select-none group-hover:text-gray-600 group-hover:visible">
+                Alterar imagem
+              </span>
             </div>
           </div>
         </div>

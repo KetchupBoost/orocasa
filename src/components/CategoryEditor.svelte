@@ -43,7 +43,6 @@
   const handleSubmit = () => {
     const db = firebase.firestore();
 
-    // TODO: Show error messages
     if (values.title === '') {
       alert('Preencha o título da categoria!');
       return;

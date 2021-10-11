@@ -1,6 +1,6 @@
 <script>
   import { setContext } from 'svelte';
-import { writable } from 'svelte/store';
+  import { writable } from 'svelte/store';
   import firebase from 'firebase/app';
   import { FirebaseApp } from 'sveltefire';
   import { Router } from 'svelte-router-spa';
@@ -12,6 +12,16 @@ import { writable } from 'svelte/store';
   setContext('app', {
     needsAuthCheck: writable(true)
   });
+
+  setContext('newOrderInfo', writable({
+    id: null,
+    count: 0,
+    ambient: '',
+    features: {}
+  }));
+  setContext('newOrderReady', writable(false));
+  setContext('orderEditReady', writable(false));
+  setContext('orderEditIndex', writable(null));
 
   // Initialize Firebase
   const firebaseConfig = {

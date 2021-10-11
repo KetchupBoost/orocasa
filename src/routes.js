@@ -6,6 +6,7 @@ import AdminEstimates from '@/pages/admin/Estimates.svelte';
 import AdminEstimatesEditor from '@/pages/admin/EstimatesEditor.svelte';
 import AdminProducts from '@/pages/admin/Products.svelte';
 import AdminCategories from '@/pages/admin/Categories.svelte';
+import AdminFeatures from '@/pages/admin/Features.svelte';
 
 export const routes = [
   {
@@ -41,6 +42,10 @@ export const routes = [
       {
         name: 'categories',
         component: AdminCategories
+      },
+      {
+        name: 'features',
+        component: AdminFeatures
       }
     ]
   }

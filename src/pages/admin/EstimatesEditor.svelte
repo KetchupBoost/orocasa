@@ -1,12 +1,23 @@
+<svelte:head>
+  <title>Admin - Editor de Orçamento</title>
+</svelte:head>
+
 <script>
   import { getContext, onMount } from 'svelte';
+  import { navigateTo } from 'svelte-router-spa';
   import firebase from 'firebase/app';
   import 'firebase/firestore';
   import { Doc } from 'sveltefire';
 
   import InputMask from '@/components/InputMask.svelte';
+  import ProductOrderEditor from '@/components/ProductOrderEditor.svelte';
 
   export let params = {};
+
+  const newOrderInfo = getContext('newOrderInfo');
+  const newOrderReady = getContext('newOrderReady');
+  const orderEditReady = getContext('orderEditReady');
+  const orderEditIndex = getContext('orderEditIndex');
 
   let isCreating = params.id === undefined;
   let values = {
@@ -21,72 +32,9 @@
     clientAddressZipCode: '',
     clientAddressReference: '',
     clientAmbient: '',
-    orders: [
-      {
-        id: 'wSFWUsmqGbaGx9zvdmX5',
-        count: 8,
-        ambient: 'Gourmet'
-      },
-      {
-        id: 'JLwXF29UECGRAUZT8Lpy',
-        count: 2,
-        ambient: 'Gourmet'
-      },
-      {
-        id: 'vVxaKiwWBsjoVNb5r5zY',
-        count: 2,
-        ambient: 'Living'
-      },
-      {
-        id: 'xo3yDtSJtk2x8RoI9cGA',
-        count: 2,
-        ambient: 'Living'
-      },
-      {
-        id: 'XXdBr52LXr45lecNJA08',
-        count: 1,
-        ambient: 'Living'
-      },
-      {
-        id: 'spgggHi5kJ1JoIQ7ImV9',
-        count: 1,
-        ambient: 'Living'
-      },
-      {
-        id: 'VphykghSsTZvYS0XtsIG',
-        count: 2,
-        ambient: 'Suíte Master'
-      },
-      {
-        id: 'cjPfqHEsOctOY103RXnO',
-        count: 1,
-        ambient: 'Suíte Master'
-      },
-      {
-        id: 'A1tpaerxiv84dz4ZSJ96',
-        count: 1,
-        ambient: 'Suíte 01'
-      },
-      {
-        id: 'cjPfqHEsOctOY103RXnO',
-        count: 1,
-        ambient: 'Suíte 01'
-      },
-      {
-        id: '5mymv5D2WkpnbxPMmpk2',
-        count: 3,
-        ambient: 'Cozinha'
-      },
-      {
-        id: 'tC80ycylF29jUE4U06Xh',
-        count: 1,
-        ambient: 'Suíte Gustavo'
-      }
-    ],
+    orders: [],
     totalPrice: 0
   };
-
-  values.orders = [];
 
   // Input masks
   const clientNameOptions = {
@@ -143,6 +91,41 @@
     });
   }
 
+  $: if ($newOrderReady) {
+    // Add a new product order to the list when it's ready
+    values.orders.push({ ...$newOrderInfo });
+    values = { ...values };
+
+    $newOrderInfo = {
+      id: null,
+      count: 0,
+      ambient: '',
+      features: {}
+    };
+    $newOrderReady = false;
+
+    handleOrderChange();
+  }
+
+  $: if ($orderEditReady) {
+    // Update the product order when it's ready
+    values.orders[$orderEditIndex] = { ...$newOrderInfo };
+    values = { ...values };
+
+    console.log($orderEditIndex, $newOrderInfo);
+
+    $newOrderInfo = {
+      id: null,
+      count: 0,
+      ambient: '',
+      features: {}
+    };
+    $orderEditReady = false;
+    $orderEditIndex = null;
+
+    handleOrderChange();
+  }
+
   onMount(() => {
     // If we're creating a new estimate, try to fetch the values from
     // localStorage
@@ -156,6 +139,8 @@
             values[key] = JSON.parse(value);
           }
         });
+
+        handleOrderChange();
       } else {
         // Clear localStorage
         Object.keys(values).forEach(key => {
@@ -163,10 +148,28 @@
         });
       }
     }
+
   });
 
   // Helpers
   const { open } = getContext('simple-modal');
+
+  const showProductOrderEditor = (index, item, name, image) => {
+    $orderEditIndex = index;
+    $newOrderInfo = { ...item };
+
+    open(ProductOrderEditor, {
+      selectedProduct: {
+        id: item.id,
+        name,
+        image
+      }
+    });
+  };
+
+  const createNewProductOrder = () => {
+    open(ProductOrderEditor);
+  };
 
   const formatPrice = price => {
     const formatter = new Intl.NumberFormat('pt-BR', {
@@ -205,6 +208,101 @@
     values = { ...values };
 
     handleOrderChange();
+  };
+
+  const handleSubmit = () => {
+    const db = firebase.firestore();
+
+    if (values.clientName === '') {
+      alert('Preencha o nome do cliente!');
+      return;
+    }
+
+    if (values.clientAddressStreet === '') {
+      alert('Preencha o logradouro!');
+      return;
+    }
+
+    if (values.clientAddressNeighborhood === '') {
+      alert('Preencha o bairro ou município!');
+      return;
+    }
+
+    if (values.clientAddressCity === '') {
+      alert('Preencha a cidade!');
+      return;
+    }
+
+    if (values.clientAddressState === '') {
+      alert('Preencha o estado!');
+      return;
+    }
+
+    if (values.clientAddressZipCode === '') {
+      alert('Preencha o CEP!');
+      return;
+    }
+
+    if (values.orders.length === 0) {
+      alert('Adicione pelo menos um produto!');
+      return;
+    }
+
+    if (isCreating) {
+      // Create an estimate document on firestore
+      const estimateRef = db
+        .collection('estimates')
+        .doc();
+
+        estimateRef
+        .set({
+          status: 'pending',
+          client: {
+            name: values.clientName,
+            address: {
+              street: values.clientAddressStreet,
+              neighborhood: values.clientAddressNeighborhood,
+              city: values.clientAddressCity,
+              state: values.clientAddressState,
+              zipCode: values.clientAddressZipCode
+            }
+          },
+          products: values.orders,
+          created_in: firebase.firestore.FieldValue.serverTimestamp(),
+          updated_in: firebase.firestore.FieldValue.serverTimestamp()
+        })
+        .then(() => {
+          navigateTo('/admin/estimates');
+        })
+        .catch(err => {
+          alert(`Erro ao criar orçamento: ${err}`);
+        });
+    } else {
+      // Update the estimate document on firestore
+      db
+        .collection('estimates')
+        .doc(id)
+        .update({
+          client: {
+            name: values.clientName,
+            address: {
+              street: values.clientAddressStreet,
+              neighborhood: values.clientAddressNeighborhood,
+              city: values.clientAddressCity,
+              state: values.clientAddressState,
+              zipCode: values.clientAddressZipCode
+            }
+          },
+          products: values.orders,
+          updated_in: firebase.firestore.FieldValue.serverTimestamp()
+        })
+        .then(() => {
+          navigateTo('/admin/estimates');
+        })
+        .catch(err => {
+          alert(`Erro ao atualizar orçamento: ${err}`);
+        });
+    }
   };
 </script>
 
@@ -348,7 +446,7 @@
       <!-- Add Product Order -->
       <button
         class="relative ml-auto text-sm lg:w-auto focus:outline-none sm:mt-0"
-        on:click={() => handleOrderChange()}
+        on:click={() => createNewProductOrder()}
       >
         <div class="flex items-center justify-center w-10 h-10 px-3 text-gray-100 rounded-full bg-main-500 md:justify-start md:rounded lg:justify-between md:w-40 hover:bg-main-600 active:bg-main-400 whitespace-nowrap">
           <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
@@ -362,7 +460,7 @@
     </div>
 
     <!-- Product List -->
-    <div class="grid w-full grid-cols-1 mt-3 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 gap-x-6 gap-y-12">
+    <div class="grid w-full grid-cols-1 gap-6 mt-3 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 lg:gap-y-8">
       {#if values.orders.length === 0}
         <div class="flex flex-col items-center justify-center w-full h-full space-y-3 text-gray-500 col-span-full">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -377,7 +475,7 @@
           <div class="product">
             <div
               class="relative block h-64 overflow-hidden bg-white rounded-lg shadow-md cursor-pointer"
-              on:click={() => showProductOrderEditor(false, item)}
+              on:click={() => showProductOrderEditor(i, item, product.name, product.image)}
             >
               <button
                 class="absolute z-10 flex items-center justify-center bg-red-500 rounded w-7 h-7 top-2 right-2 text-red-50 hover:bg-red-600 active:bg-red-400"
@@ -396,21 +494,11 @@
             <div class="flex items-center justify-between mt-3">
               <div class="flex flex-col">
                 <span class="font-medium">{product.name}</span>
-                <div class="flex flex-col items-start">
-                  <Doc
-                    path={`categories/${product.category}`}
-                    let:data={category}
-                  >
-                    <span class="text-xs font-medium select-none text-main-500">
-                      {category.title}
-                    </span>
-                  </Doc>
-                  <span class="text-xs font-medium select-none">
-                    {item.ambient}
-                  </span>
-                </div>
+                <span class="text-xs font-medium text-main-500">
+                  {item.ambient}
+                </span>
               </div>
-              <span class="flex items-center h-8 px-2 text-sm rounded text-main-600 bg-main-200 whitespace-nowrap">
+              <span class="flex items-center h-8 px-2 ml-1 text-sm rounded text-main-600 bg-main-200 whitespace-nowrap">
                 {item.count} x {formatPrice(product.price)}
               </span>
             </div>
@@ -441,6 +529,7 @@
   <div class="h-auto mt-6">
     <button
       class="flex items-center justify-center flex-shrink-0 w-full h-10 text-sm font-medium text-white rounded bg-main-500 disabled:bg-main-200 hover:bg-main-600 active:bg-main-400"
+      on:click={() => handleSubmit()}
     >
       {isCreating ? 'Criar Orçamento' : 'Salvar Alterações'}
     </button>
@@ -448,31 +537,8 @@
 </div>
 
 <style scoped>
-  .group:focus .group-focus\:flex,
-  .group-focus\:flex:active {
-    display: flex;
-  }
-
   .label {
     @apply text-xs font-semibold select-none;
-  }
-
-  .button {
-    @apply flex items-center justify-center flex-shrink-0 h-full text-sm text-white rounded;
-  }
-
-  .button:disabled {
-    @apply bg-main-300;
-  }
-
-  input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  input[type=number] {
-    -moz-appearance: textfield;
   }
 
   .product-image {

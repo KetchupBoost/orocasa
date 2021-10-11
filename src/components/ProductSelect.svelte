@@ -1,15 +1,8 @@
-<svelte:head>
-  <title>Admin - Produtos</title>
-</svelte:head>
-
 <script>
-  import { getContext } from 'svelte';
   import 'firebase/firestore';
   import { Collection, Doc } from 'sveltefire';
 
-  import ProductEditor from '@/components/ProductEditor.svelte';
-
-  const { open } = getContext('simple-modal');
+  export let selected = null;
 
   const sortingModes = [
     {
@@ -95,37 +88,21 @@
     updateQuery();
   };
 
-  const showProductEditor = (isCreating, id) => {
-    open(ProductEditor, { isCreating, id });
+  const selectProduct = (id, name, image) => {
+    selected = { id, name, image };
   };
 </script>
 
-<main class="flex flex-col w-screen min-h-screen p-4 pt-8 overflow-y-auto text-gray-800 bg-gray-50 md:p-8">
-  <!-- Header -->
-  <h1 class="text-3xl">Produtos</h1>
-
+<div class="flex flex-col w-full min-h-full overflow-y-auto text-gray-800">
   <!-- Grid Options -->
-  <div class="flex flex-col mt-6 lg:flex-row lg:items-end lg:justify-between">
-    <!-- New Product -->
-    <button
-      class="relative w-full mt-4 text-sm lg:w-auto focus:outline-none sm:mt-0"
-      on:click={() => showProductEditor(true)}
-    >
-      <div class="flex items-center justify-start w-full h-10 px-3 text-gray-100 rounded bg-main-500 lg:justify-between lg:w-40 hover:bg-main-600 active:bg-main-400">
-        <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-        </svg>
-        <span class="w-full font-medium text-center">Novo Produto</span>
-      </div>
-    </button>
-
+  <div class="flex flex-col mt-1 lg:flex-row lg:items-end lg:justify-between">
     <!-- Search -->
-    <div class="relative w-full mt-4 ml-auto mr-6 text-sm lg:pl-6 lg:w-auto lg:mt-0">
+    <div class="relative w-full text-sm lg:w-auto md:mr-3">
       <div class="flex items-center justify-between w-full h-10 border-2 border-gray-300 rounded lg:w-50 focus-within:border-2 focus-within:border-black">
         <input
           class="flex items-center w-full h-full px-4 rounded bg-gray-50 focus:outline-none"
           type="text"
-          placeholder="Pesquisar por Nome"
+          placeholder="Pesquisar"
           bind:value={currentSearchTerm}
         />
         {#if currentSearchTerm === ''}
@@ -148,7 +125,7 @@
     </div>
 
     <!-- Category Select -->
-    <button class="relative w-full mt-4 mr-3 text-sm lg:w-48 focus:outline-none group lg:mt-0">
+    <button class="relative flex-shrink-0 w-full mt-2 mr-3 text-sm lg:w-48 focus:outline-none group lg:mt-0">
       <div class="flex items-center justify-between h-10 px-3 border-2 border-gray-300 rounded hover:bg-gray-300">
         <span class="font-medium">
           {currentCategoryTitle}
@@ -182,7 +159,7 @@
     </button>
 
     <!-- Order Select -->
-    <button class="relative w-full mt-4 text-sm lg:w-48 focus:outline-none group lg:mt-0">
+    <button class="relative flex-shrink-0 w-full mt-2 text-sm lg:w-48 focus:outline-none group lg:mt-0">
       <div class="flex items-center justify-between h-10 px-3 border-2 border-gray-300 rounded hover:bg-gray-300">
         <span class="font-medium">
           {sortingModes[selectedSortingMode].title}
@@ -228,12 +205,12 @@
       </div>
     {/if}
 
-    <div class="grid w-full grid-cols-1 gap-6 mt-6 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 lg:gap-y-8">
+    <div class="grid w-full grid-cols-1 gap-4 p-2 mt-6 2xl:grid-cols-4 md:grid-cols-2 lg:gap-y-8">
       {#each filterSearch(products, currentSearchTerm) as product, i (i)}
         <div class="product">
           <div
             class="block h-64 overflow-hidden bg-white rounded-lg shadow-lg cursor-pointer"
-            on:click={() => showProductEditor(false, product.id)}
+            on:click={() => selectProduct(product.id, product.name, product.image)}
           >
             <div
               class="w-full h-full bg-center bg-no-repeat bg-contain product-image"
@@ -272,7 +249,7 @@
       {/each}
     </div>
   </Collection>
-</main>
+</div>
 
 <style scoped>
   .grid:after {

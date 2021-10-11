@@ -42,7 +42,6 @@
   };
 
   const showCategoryEditor = (isCreating, id) => {
-    console.log(id);
     open(CategoryEditor, { isCreating, id });
   };
 

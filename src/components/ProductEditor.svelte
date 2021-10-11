@@ -6,6 +6,7 @@
   import { Collection } from 'sveltefire';
 
   import InputMask from '@/components/InputMask.svelte';
+  import Multiselect from '@/components/Multiselect.svelte';
 
   export let isCreating = false;
   export let id;
@@ -15,9 +16,13 @@
     price: '0',
     image: '',
     stock: 0,
-    category: null
+    category: null,
+    features: []
   };
   let categoryTitle = 'Selecione uma categoria';
+  let featureNames = [];
+  let featureItems = {};
+  let selectedFeatures = [];
   let imageIsUploading = false;
   let imageFile;
 
@@ -38,31 +43,45 @@
     max: 9999999.99,
   };
 
+  const db = firebase.firestore();
+
+  // Fetch all features from firebase
+  db.collection('fields')
+    .get()
+    .then(snapshot => {
+      snapshot.forEach(doc => {
+        featureItems[doc.id] = doc.data().name;
+      });
+
+      featureItems = { ...featureItems };
+    });
+
+  // If we're editing an existing product, fetch its data
+  if (!isCreating && id) {
+    db.collection('products')
+      .doc(id)
+      .get()
+      .then(doc => {
+        values = doc.data();
+
+        // Fetch category title
+        db
+          .collection('categories')
+          .doc(values.category.toString())
+          .get()
+          .then(doc => {
+            categoryTitle = doc.data().title;
+          })
+          .catch(err => {
+            console.error(err);
+          });
+
+        // Fetch selected features
+        selectedFeatures = [ ...values.features ];
+      });
+  };
+
   onMount(() => {
-    const db = firebase.firestore();
-
-    // If we're editing an existing product, fetch its data
-    if (!isCreating && id) {
-      db.collection('products')
-        .doc(id)
-        .get()
-        .then(doc => {
-          values = doc.data();
-
-          // Fetch category title
-          db
-            .collection('categories')
-            .doc(values.category.toString())
-            .get()
-            .then(doc => {
-              categoryTitle = doc.data().title;
-            })
-            .catch(err => {
-              console.error(err);
-            });
-        });
-    };
-
     // Handle image uploading
     imageFile.addEventListener('change', () => {
       if (imageFile.files.length === 0)
@@ -136,10 +155,11 @@
       });
   }
 
+  // FIXME: Delete the image from storage if the user doesn't submit the form
+
   const handleSubmit = () => {
     const db = firebase.firestore();
 
-    // TODO: Show error messages
     if (values.name === '') {
       alert('Preencha o nome do produto!');
       return;
@@ -186,7 +206,8 @@
           price: values.price,
           image: values.image,
           stock: values.stock,
-          category: values.category
+          category: values.category,
+          features: selectedFeatures
         })
         .then(() => {
           close();
@@ -210,7 +231,6 @@
         close();
       });
   };
-
 </script>
 
 <div class="flex items-center w-full pt-8 {!isCreating && 'pb-12'}">
@@ -306,6 +326,16 @@
           </div>
         </button>
       </div>
+    </div>
+
+    <!-- Features -->
+    <div class="col-span-full">
+      <label for="features" class="label">Atributos</label>
+      <Multiselect
+        title="Selecione um ou mais atributos"
+        bind:items={featureItems}
+        bind:selected={selectedFeatures}
+      />
     </div>
 
     <!-- Image -->

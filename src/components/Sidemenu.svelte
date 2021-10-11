@@ -17,7 +17,7 @@
   };
 </script>
 
-<div class="flex flex-col items-center flex-shrink-0 w-16 h-full overflow-hidden overflow-y-auto text-main-200 bg-main-900 lg:w-48">
+<div class="flex flex-col items-center flex-shrink-0 w-16 h-full overflow-hidden overflow-y-auto text-gray-200 bg-gray-900 lg:w-48">
   <div class="flex items-center justify-between w-full pl-4 pr-3 mt-3 lg:justify-start">
     <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 fill-current" viewBox="0 0 20 20" fill="currentColor">
       <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
@@ -47,7 +47,7 @@
       <!-- Estimates -->
       <a
         href="/admin/estimates"
-        class="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-main-50 hover:text-main-600"
+        class="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-50 hover:text-gray-600"
         class:active={currentRoute.path == '/admin/estimates'}
       >
         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -56,12 +56,12 @@
         <span class="hidden ml-3 text-sm font-medium lg:block">Orçamentos</span>
       </a>
 
-      <div class="w-4/5 h-[1px] bg-main-700 mt-3 mb-1"/>
+      <div class="w-4/5 h-[1px] bg-gray-700 mt-3 mb-1"/>
 
       <!-- Products -->
       <a
         href="/admin/products"
-        class="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-main-50 hover:text-main-600"
+        class="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-50 hover:text-gray-600"
         class:active={currentRoute.path == '/admin/products'}
       >
         <svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -73,7 +73,7 @@
       <!-- Categories -->
       <a
         href="/admin/categories"
-        class="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-main-50 hover:text-main-600"
+        class="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-50 hover:text-gray-600"
         class:active={currentRoute.path == '/admin/categories'}
       >
         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -82,41 +82,44 @@
         <span class="hidden ml-3 text-sm font-medium lg:block">Categorias</span>
       </a>
 
-      <!-- Fields -->
+      <!-- Features -->
       <a
-        href="/admin/fields"
-        class="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-main-50 hover:text-main-600"
-        class:active={currentRoute.path == '/admin/fields'}
+        href="/admin/features"
+        class="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-50 hover:text-gray-600"
+        class:active={currentRoute.path == '/admin/features'}
       >
         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.871 4A17.926 17.926 0 003 12c0 2.874.673 5.59 1.871 8m14.13 0a17.926 17.926 0 001.87-8c0-2.874-.673-5.59-1.87-8M9 9h1.246a1 1 0 01.961.725l1.586 5.55a1 1 0 00.961.725H15m1-7h-.08a2 2 0 00-1.519.698L9.6 15.302A2 2 0 018.08 16H8" />
         </svg>
-        <span class="hidden ml-3 text-sm font-medium lg:block">Campos</span>
+        <span class="hidden ml-3 text-sm font-medium lg:block">
+          Atributos
+        </span>
       </a>
     </div>
 
-    <div class="w-4/5 h-[1px] bg-main-700 mt-3 mb-1"/>
+    <div class="w-4/5 h-[1px] bg-gray-700 mt-3 mb-1"/>
 
     <div class="flex flex-col items-center w-full">
       <!-- Messages -->
       <a
         href="/admin/messages"
-        class="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-main-50 hover:text-main-600"
+        class="relative flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-50 hover:text-gray-600"
         class:active={currentRoute.path == '/admin/messages'}
       >
         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
         </svg>
         <span class="hidden ml-3 text-sm font-medium lg:block">Mensagens</span>
-        <span class="flex items-center justify-center ml-auto text-sm font-semibold text-white bg-red-500 rounded-full w-7 h-7">
+        <span class="items-center justify-center hidden ml-auto text-sm font-semibold text-white bg-red-500 rounded-full lg:flex w-7 h-7">
           7
         </span>
+        <span class="absolute top-0 right-0 w-2 h-2 mt-2 mr-2 bg-red-500 rounded-full lg:hidden" />
       </a>
     </div>
   </div>
 
   <button
-    class="flex items-center justify-center flex-shrink-0 w-full h-16 mt-6 bg-main-700 md:mt-auto hover:bg-main-800 active:bg-main-600"
+    class="flex items-center justify-center flex-shrink-0 w-full h-16 mt-6 bg-gray-700 md:mt-auto hover:bg-gray-800 active:bg-gray-600"
     on:click={logout}
   >
     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -128,6 +131,6 @@
 
 <style scoped>
   .active {
-    @apply bg-main-50 text-main-600;
+    @apply bg-gray-50 text-gray-600;
   }
 </style>

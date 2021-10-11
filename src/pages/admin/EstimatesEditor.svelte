@@ -148,7 +148,6 @@
         });
       }
     }
-
   });
 
   // Helpers
@@ -272,6 +271,11 @@
           updated_in: firebase.firestore.FieldValue.serverTimestamp()
         })
         .then(() => {
+          // Clear localStorage
+          Object.keys(values).forEach(key => {
+            window.localStorage.removeItem(key);
+          });
+
           navigateTo('/admin/estimates');
         })
         .catch(err => {
@@ -297,6 +301,11 @@
           updated_in: firebase.firestore.FieldValue.serverTimestamp()
         })
         .then(() => {
+          // Clear localStorage
+          Object.keys(values).forEach(key => {
+            window.localStorage.removeItem(key);
+          });
+
           navigateTo('/admin/estimates');
         })
         .catch(err => {

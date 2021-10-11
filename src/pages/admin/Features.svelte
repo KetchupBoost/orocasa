@@ -37,12 +37,31 @@
 
     const db = firebase.firestore();
 
+    // First remove the feature from every product that contains it
     db
-      .collection('fields')
-      .doc(slug)
-      .delete()
-      .catch(error => {
-        alert(`Erro ao excluir o atributo: ${error.message}`);
+      .collection('products')
+      .get()
+      .then(async snapshot => {
+        for (const doc of snapshot.docs) {
+          const productFeatures = doc.data().features;
+
+          if (productFeatures.includes(slug)) {
+            await doc
+              .ref
+              .update({
+                features: productFeatures.filter(feature => feature !== slug)
+              });
+          }
+        }
+
+        // Then remove the feature itself
+        db
+          .collection('fields')
+          .doc(slug)
+          .delete()
+          .catch(error => {
+            alert(`Erro ao excluir o atributo: ${error.message}`);
+          });
       });
   };
 </script>

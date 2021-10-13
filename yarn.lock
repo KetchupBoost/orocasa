@@ -4524,6 +4524,11 @@ pacote@^11.1.11, pacote@^11.3.4, pacote@^11.3.5:
     ssri "^8.0.1"
     tar "^6.1.0"
 
+paper-css@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/paper-css/-/paper-css-0.4.1.tgz#170ce3f3f6969f20e0c8830163c9ab8aed2b8f36"
+  integrity sha512-7gOjG4Hzy/ZGG/+tn8weFtSHWtQvSpkeJpFsH0nLqjXiH50zFyhajHggLEZd0hpCoYBhg5pRH5Lrg9p3EnDl2A==
+
 param-case@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/param-case/-/param-case-2.1.1.tgz#df94fd8cf6531ecf75e6bef9a0858fbc72be2247"

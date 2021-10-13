@@ -32,7 +32,8 @@ export default {
       'svelte',
       'svelte/store',
       'svelte/transition',
-      '@imask/svelte'
+      '@imask/svelte',
+      'imask/esm/masked/number'
     ]
   },
   devOptions: {

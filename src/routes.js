@@ -2,6 +2,7 @@ import RootLayout from '@/layouts/RootLayout.svelte';
 import AdminLayout from '@/layouts/AdminLayout.svelte';
 import Home from '@/pages/Home.svelte';
 import Login from '@/pages/Login.svelte';
+import EstimatePreview from '@/pages/admin/EstimatePreview.svelte';
 import AdminEstimates from '@/pages/admin/Estimates.svelte';
 import AdminEstimatesEditor from '@/pages/admin/EstimatesEditor.svelte';
 import AdminProducts from '@/pages/admin/Products.svelte';
@@ -18,6 +19,10 @@ export const routes = [
     name: '/login',
     component: Login,
     layout: RootLayout
+  },
+  {
+    name: '/estimate-preview/:id',
+    component: EstimatePreview
   },
   {
     name: '/admin',

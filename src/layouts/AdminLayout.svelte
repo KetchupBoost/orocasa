@@ -8,6 +8,7 @@
   import Sidemenu from '@/components/Sidemenu.svelte';
 
   export let currentRoute;
+  export let params = {};
 
   let isWaitingForAuth = $needsAuthCheck;
 
@@ -34,7 +35,7 @@
       <Sidemenu {currentRoute} />
 
       <!-- Content -->
-      <Route {currentRoute} />
+      <Route {currentRoute} {params} />
     </main>
   </Modal>
 {/if}

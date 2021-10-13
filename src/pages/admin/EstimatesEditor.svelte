@@ -12,7 +12,8 @@
   import InputMask from '@/components/InputMask.svelte';
   import ProductOrderEditor from '@/components/ProductOrderEditor.svelte';
 
-  export let params = {};
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  const params = Object.fromEntries(urlSearchParams.entries());
 
   const newOrderInfo = getContext('newOrderInfo');
   const newOrderReady = getContext('newOrderReady');
@@ -31,7 +32,7 @@
     clientAddressState: '',
     clientAddressZipCode: '',
     clientAddressReference: '',
-    clientAmbient: '',
+    professional: '',
     orders: [],
     totalPrice: 0
   };
@@ -65,6 +66,9 @@
   const clientAddressReferenceOptions = {
     mask: /^[A-Za-zÀ-ÖØ-öø-ÿ\-\/\(\)\,\.0-9\s]+$/
   };
+  const professionalNameOptions = {
+    mask: /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/
+  };
   const totalPriceOptions = {
     mask: Number,
     scale: 2,
@@ -77,6 +81,38 @@
     min: 0.0,
     max: 9999999.99,
   };
+
+  if (!isCreating) {
+    // Load data from firebase
+    const db = firebase.firestore();
+
+    db
+      .collection('estimates')
+      .doc(params.id)
+      .get()
+      .then(doc => {
+        if (doc.exists) {
+          const { client, products, professional, priceTotal } = doc.data();
+
+          values = {
+            clientName: client.name,
+            clientAddressStreet: client.address.street,
+            clientAddressNumber: client.address.number,
+            clientAddressComplement: client.address.complement,
+            clientAddressNeighborhood: client.address.neighborhood,
+            clientAddressCity: client.address.city,
+            clientAddressState: client.address.state,
+            clientAddressZipCode: client.address.zipCode,
+            clientAddressReference: client.address.reference,
+            orders: products,
+            totalPrice: priceTotal,
+            professional
+          };
+        } else {
+          navigateTo('/admin/estimates');
+        }
+      });
+  }
 
   $: {
     // Update every non-empty key of `values` on localStorage
@@ -130,7 +166,6 @@
     // If we're creating a new estimate, try to fetch the values from
     // localStorage
     if (isCreating && window.localStorage.length > 0) {
-
       if (confirm('Dados de um orçamento em rascunho foram encontrados.\r\nDeseja continuar de onde parou?\r\n\r\n(Selecionar "cancelar" irá deletar o rascunho).')) {
         Object.keys(values).forEach(key => {
           const value = window.localStorage.getItem(key);
@@ -260,13 +295,18 @@
             name: values.clientName,
             address: {
               street: values.clientAddressStreet,
+              number: values.clientAddressNumber,
+              complement: values.clientAddressComplement,
               neighborhood: values.clientAddressNeighborhood,
               city: values.clientAddressCity,
               state: values.clientAddressState,
-              zipCode: values.clientAddressZipCode
+              zipCode: values.clientAddressZipCode,
+              reference: values.clientAddressReference
             }
           },
           products: values.orders,
+          professional: values.professional,
+          priceTotal: values.totalPrice,
           created_in: firebase.firestore.FieldValue.serverTimestamp(),
           updated_in: firebase.firestore.FieldValue.serverTimestamp()
         })
@@ -285,19 +325,24 @@
       // Update the estimate document on firestore
       db
         .collection('estimates')
-        .doc(id)
+        .doc(params.id)
         .update({
           client: {
             name: values.clientName,
             address: {
               street: values.clientAddressStreet,
+              number: values.clientAddressNumber,
+              complement: values.clientAddressComplement,
               neighborhood: values.clientAddressNeighborhood,
               city: values.clientAddressCity,
               state: values.clientAddressState,
-              zipCode: values.clientAddressZipCode
+              zipCode: values.clientAddressZipCode,
+              reference: values.clientAddressReference
             }
           },
           products: values.orders,
+          professional: values.professional,
+          priceTotal: values.totalPrice,
           updated_in: firebase.firestore.FieldValue.serverTimestamp()
         })
         .then(() => {
@@ -325,7 +370,7 @@
 
     <!-- Name -->
     <div class="col-span-full">
-      <label for="name" class="label">Nome Completo</label>
+      <label for="clientName" class="label">Nome Completo</label>
       <InputMask
         type="text"
         name="clientName"
@@ -443,6 +488,24 @@
         unmask="typed"
         imask={clientAddressReferenceOptions}
         bind:value={values.clientAddressReference}
+      />
+    </div>
+  </div>
+
+  <!-- Professional Info -->
+  <div class="grid w-full grid-cols-6 gap-4 p-3 py-5 mt-5 bg-white rounded-lg shadow-md md:p-6">
+    <h2 class="text-xl col-span-full">Profissional</h2>
+
+    <!-- Name -->
+    <div class="col-span-full">
+      <label for="professionalName" class="label">Nome Completo</label>
+      <InputMask
+        type="text"
+        name="professionalName"
+        class="flex items-center w-full h-10 px-4 mt-1 text-sm border-2 rounded"
+        unmask="typed"
+        imask={professionalNameOptions}
+        bind:value={values.professional}
       />
     </div>
   </div>

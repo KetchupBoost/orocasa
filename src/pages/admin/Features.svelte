@@ -66,7 +66,7 @@
   };
 </script>
 
-<main class="flex flex-col w-screen min-h-screen p-8 overflow-y-scroll text-gray-800 bg-gray-50">
+<main class="flex flex-col w-screen min-h-screen p-4 pt-8 overflow-y-auto text-gray-800 bg-gray-50 md:p-8">
   <!-- Header -->
   <h1 class="text-3xl">Atributos</h1>
 

@@ -5,9 +5,26 @@ html,
 body {
   margin: 0;
   padding: 0;
-  overflow: hidden;
 }
 
 * {
   box-sizing: border-box;
+}
+
+/*
+ * Fonts
+ */
+@font-face {
+  font-family: 'Dax';
+  src: url(/fonts/dax.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Swis721 BT Bold';
+  src: url(/fonts/Swis721_BT_Bold.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Swis721 BT Italic';
+  src: url(/fonts/Swis721_BT_Italic.ttf) format('truetype');
 }

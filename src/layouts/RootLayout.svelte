@@ -4,6 +4,6 @@
   export let currentRoute;
 </script>
 
-<main class="flex w-screen h-screen">
+<div class="flex justify-center bg-white">
   <Route {currentRoute} />
-</main>
+</div>

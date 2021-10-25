@@ -30,12 +30,12 @@
   <div />
 {:else}
   <Modal>
-    <main class="flex w-screen h-screen overflow-y-hidden">
+    <div class="flex w-screen h-screen overflow-y-hidden">
       <!-- Sidemenu -->
       <Sidemenu {currentRoute} />
 
       <!-- Content -->
       <Route {currentRoute} {params} />
-    </main>
+    </div>
   </Modal>
 {/if}

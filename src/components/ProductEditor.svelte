@@ -20,7 +20,7 @@
     features: []
   };
   let categoryTitle = 'Selecione uma categoria';
-  let featureNames = [];
+  // let featureNames = [];
   let featureItems = {};
   let selectedFeatures = [];
   let imageIsUploading = false;

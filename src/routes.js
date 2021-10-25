@@ -8,6 +8,7 @@ import AdminEstimatesEditor from '@/pages/admin/EstimatesEditor.svelte';
 import AdminProducts from '@/pages/admin/Products.svelte';
 import AdminCategories from '@/pages/admin/Categories.svelte';
 import AdminFeatures from '@/pages/admin/Features.svelte';
+import AdminConfig from '@/pages/admin/Config.svelte';
 
 export const routes = [
   {
@@ -51,6 +52,10 @@ export const routes = [
       {
         name: 'features',
         component: AdminFeatures
+      },
+      {
+        name: 'config',
+        component: AdminConfig
       }
     ]
   }

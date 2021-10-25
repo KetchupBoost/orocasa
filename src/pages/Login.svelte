@@ -19,6 +19,8 @@
   });
 
   // Helpers
+  const getCurrentYear = () => new Date().getFullYear();
+
   const onSubmit = () => {
     auth.signInWithEmailAndPassword(emailField, passwordField)
       .catch(error => {
@@ -44,7 +46,7 @@
 <main class="flex flex-col items-center justify-center w-screen h-screen text-gray-700 bg-main-50">
   <!-- Form -->
   <form
-    class="flex flex-col p-10 mt-12 bg-white rounded shadow-lg"
+    class="flex flex-col p-10 mt-12 bg-white rounded-lg shadow-lg"
     on:submit|preventDefault={onSubmit}
   >
     <!-- Username Field -->
@@ -86,13 +88,36 @@
 
     <!-- Alternative Options -->
     <div class="flex justify-center mt-6 text-xs">
-      <button class="text-main-400 hover:text-main-500 active:text-main-300">
+      <!-- <button class="text-main-400 hover:text-main-500 active:text-main-300">
         Esqueci a Senha
-      </button>
-      <span class="mx-2 text-gray-300">/</span>
+      </button> -->
+      <!-- <span class="mx-2 text-gray-300">/</span> -->
       <a href="/" class="text-main-400 hover:text-main-500 active:text-main-300">
         Voltar
       </a>
     </div>
   </form>
+
+  <div class="absolute bottom-0 flex items-end justify-between w-full h-12 px-8 py-8 md:px-24">
+    <span class="small opacity-60">Copyright © {getCurrentYear()}</span>
+    <a href="https://saikoosistemas.com.br" target="blank">
+      <div
+        style="background-image:url(/images/brand_saikoo.png);"
+        class="w-[100px] bg-cover h-7"
+      />
+    </a>
+  </div>
 </main>
+
+<style scoped>
+  .small {
+    font-size: 110%;
+    line-height: 1.2;
+  }
+
+  @media (max-width: 768px) {
+    .small {
+      font-size: 4vw;
+    }
+  }
+</style>

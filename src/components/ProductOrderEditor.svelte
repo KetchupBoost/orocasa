@@ -1,5 +1,6 @@
 <script>
   import { getContext } from 'svelte';
+  import { Doc } from 'sveltefire';
   import firebase from 'firebase/app';
   import 'firebase/firestore';
   import 'firebase/storage';
@@ -223,14 +224,42 @@
         {#each Object.entries(values.features) as [key, feature] (key)}
           <div class="col-span-full">
             <label for="feature-{key}" class="label">{feature.name}</label>
-            <InputMask
-              type="text"
-              name="feature-{key}"
-              class="flex items-center w-full h-10 px-4 mt-1 text-sm border-2 rounded"
-              unmask="typed"
-              imask={featureValueOptions}
-              bind:value={values.features[key].value}
-            />
+
+            <Doc path={`fields/${key}`} let:data>
+              {#if data.is_open}
+                <InputMask
+                  type="text"
+                  name="feature-{key}"
+                  class="flex items-center w-full h-10 px-4 mt-1 text-sm border-2 rounded"
+                  unmask="typed"
+                  imask={featureValueOptions}
+                  bind:value={values.features[key].value}
+                />
+              {:else}
+                <button class="relative w-full mt-1 text-sm focus:outline-none group">
+                  <div class="flex items-center justify-between h-10 px-3 border-2 border-gray-200 rounded hover:bg-gray-200">
+                    <span class="font-medium">
+                      {values.features[key].value}
+                    </span>
+                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                  </div>
+                  <div class="absolute z-10 flex-col items-start hidden w-full pb-1 bg-white rounded shadow-lg group-focus:flex">
+                    {#each data.values as item, i (i)}
+                      <button
+                        class="w-full px-4 py-2 text-left hover:bg-gray-200"
+                        on:click={() => {
+                          values.features[key].value = item.value
+                        }}
+                      >
+                        {item.value}
+                      </button>
+                    {/each}
+                  </div>
+                </button>
+              {/if}
+            </Doc>
           </div>
         {/each}
 

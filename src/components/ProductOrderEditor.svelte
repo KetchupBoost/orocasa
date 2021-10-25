@@ -8,6 +8,7 @@
   import InputMask from '@/components/InputMask.svelte';
   import ProductSelect from '@/components/ProductSelect.svelte';
 
+  export let isNew = false;
   export let selectedProduct = null;
 
   const newOrderInfo = getContext('newOrderInfo');
@@ -30,7 +31,7 @@
     mask: /^[A-Za-zÀ-ÖØ-öø-ÿ0-9\(\)\-\,\.\[\]\!\*\%\=\/\s]+$/
   };
 
-  const isCreating = $orderEditIndex === null;
+  const isCreating = $orderEditIndex === null || isNew;
 
   const db = firebase.firestore();
 

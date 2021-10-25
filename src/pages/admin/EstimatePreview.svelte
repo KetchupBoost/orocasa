@@ -20,7 +20,9 @@
     created_in: null,
     products: [],
     professional: '',
-    priceTotal: 0
+    priceTotal: 0,
+    paymentConditions: [],
+    observations: []
   };
   // let imageURLs = {};
 
@@ -40,13 +42,17 @@
         created_in,
         products,
         professional,
-        priceTotal
+        priceTotal,
+        paymentConditions,
+        observations
       } = doc.data();
 
       data.client = client;
       data.professional = professional;
       data.created_in = created_in.seconds;
       data.priceTotal = priceTotal;
+      data.paymentConditions = paymentConditions;
+      data.observations = observations;
 
       for (let product of products) {
         // Fetch product data from firebase
@@ -258,40 +264,32 @@
       Condições de Pagamento
     </div>
     <div class="grid w-full grid-cols-3 border-b border-l border-r">
-      <div class="col-span-1 text-center text-light">
-        Parcelado no Cartão 12x
-      </div>
-      <div class="col-span-1 text-center border-l text-light">
-        12 x {formatPrice((data.priceTotal - (data.priceTotal * .10)) / 12)}
-      </div>
-      <div class="col-span-1 text-center border-l text-light">
-        Total {formatPrice(data.priceTotal - (data.priceTotal * .10))}
-      </div>
-      <div class="col-span-1 text-center border-t text-bold">
-        À Vista
-      </div>
-      <div class="col-span-1 text-center border-t border-l text-bold">
-        Entrada de {formatPrice((data.priceTotal - (data.priceTotal * .20)) / 2)} + 1 boleto
-      </div>
-      <div class="col-span-1 text-center border-t border-l text-bold">
-        Total {formatPrice(data.priceTotal - (data.priceTotal * .20))}
-      </div>
+      {#each data.paymentConditions as line, i (i)}
+        <div class="col-span-1 text-center border-t text-light">
+          {line.first}
+        </div>
+        <div class="col-span-1 text-center border-t border-l text-light">
+          {line.second}
+        </div>
+        <div class="col-span-1 text-center border-t border-l text-light">
+          {line.third}
+        </div>
+      {/each}
       <div class="col-span-3 bg-gray h-[15px]"/>
     </div>
   </div>
 
   <!-- Observations -->
-  <div class="w-full mt-5 text-bold">
-    <span class="ml-2">Observações:</span>
-    <ul class="flex flex-col w-full pl-16 mt-3 list-disc">
-      <li class="text-normal">Validade do orçamento – 7 dias;</li>
-      <li class="text-bold">
-        Prazo de entrega – 80 a 95 dias após a assinatura do contrato de imagens;
-      </li>
-      <li class="text-normal">Instalação inclusa;</li>
-      <li class="text-normal">Produto(s) executado(s) sob encomenda.</li>
-    </ul>
-  </div>
+  {#if data.observations.length > 0}
+    <div class="w-full mt-5 text-bold">
+      <span class="ml-2">Observações:</span>
+      <ul class="flex flex-col w-full pl-16 mt-3 list-disc">
+        {#each data.observations as item, i (i)}
+          <li class="text-normal">{item.value}</li>
+        {/each}
+      </ul>
+    </div>
+  {/if}
 
   <!-- Signatures -->
   <div class="flex justify-between w-full mt-24">
@@ -362,6 +360,7 @@
     }
 
     .payment-info {
+      page-break-before: always;
       margin-top: 35mm;
     }
 

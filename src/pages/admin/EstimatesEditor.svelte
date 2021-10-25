@@ -11,6 +11,7 @@
 
   import InputMask from '@/components/InputMask.svelte';
   import ProductOrderEditor from '@/components/ProductOrderEditor.svelte';
+  import PaymentConditionsEditor from '@/components/PaymentConditionsEditor.svelte';
 
   const urlSearchParams = new URLSearchParams(window.location.search);
   const params = Object.fromEntries(urlSearchParams.entries());
@@ -19,6 +20,11 @@
   const newOrderReady = getContext('newOrderReady');
   const orderEditReady = getContext('orderEditReady');
   const orderEditIndex = getContext('orderEditIndex');
+
+  const newPaymentConditionInfo = getContext('newPaymentConditionInfo');
+  const newPaymentConditionReady = getContext('newPaymentConditionReady');
+  const paymentConditionEditReady = getContext('paymentConditionEditReady');
+  const paymentConditionEditIndex = getContext('paymentConditionEditIndex');
 
   let isCreating = params.id === undefined;
   let values = {
@@ -34,7 +40,9 @@
     clientAddressReference: '',
     professional: '',
     orders: [],
-    totalPrice: 0
+    totalPrice: 0,
+    paymentConditions: [],
+    observations: []
   };
 
   // Input masks
@@ -81,6 +89,9 @@
     min: 0.0,
     max: 9999999.99,
   };
+  const observationOptions = {
+    mask: /^[A-Za-zÀ-ÖØ-öø-ÿ0-9\(\)\-\+\,\.\[\]\!\*\%\=\/\$\;\:\s]+$/
+  };
 
   if (!isCreating) {
     // Load data from firebase
@@ -92,7 +103,14 @@
       .get()
       .then(doc => {
         if (doc.exists) {
-          const { client, products, professional, priceTotal } = doc.data();
+          const {
+            client,
+            products,
+            professional,
+            priceTotal,
+            paymentConditions,
+            observations
+          } = doc.data();
 
           values = {
             clientName: client.name,
@@ -106,7 +124,9 @@
             clientAddressReference: client.address.reference,
             orders: products,
             totalPrice: priceTotal,
-            professional
+            paymentConditions,
+            professional,
+            observations
           };
         } else {
           navigateTo('/admin/estimates');
@@ -148,8 +168,6 @@
     values.orders[$orderEditIndex] = { ...$newOrderInfo };
     values = { ...values };
 
-    console.log($orderEditIndex, $newOrderInfo);
-
     $newOrderInfo = {
       id: null,
       count: 0,
@@ -160,6 +178,33 @@
     $orderEditIndex = null;
 
     handleOrderChange();
+  }
+
+  $: if ($newPaymentConditionReady) {
+    // Add a new payment condition to the list when it's ready
+    values.paymentConditions.push({ ...$newPaymentConditionInfo });
+    values = { ...values };
+
+    $newPaymentConditionInfo = {
+      first: '',
+      second: '',
+      third: ''
+    };
+    $newPaymentConditionReady = false;
+  }
+
+  $: if ($paymentConditionEditReady) {
+    // Update the payment condition when it's ready
+    values.paymentConditions[$paymentConditionEditIndex] = { ...$newPaymentConditionInfo };
+    values = { ...values };
+
+    $newPaymentConditionInfo = {
+      first: '',
+      second: '',
+      third: ''
+    };
+    $paymentConditionEditReady = false;
+    $paymentConditionEditIndex = null;
   }
 
   onMount(() => {
@@ -201,8 +246,25 @@
     });
   };
 
+  const showPaymentConditionsEditor = (index, item) => {
+    $paymentConditionEditIndex = index;
+    $newPaymentConditionInfo = { ...item };
+
+    open(PaymentConditionsEditor, {
+      selectedPaymentCondition: {
+        first: item.first,
+        second: item.second,
+        third: item.third
+      }
+    });
+  };
+
   const createNewProductOrder = () => {
-    open(ProductOrderEditor);
+    open(ProductOrderEditor, { isNew: true });
+  };
+
+  const createNewPaymentCondition = () => {
+    open(PaymentConditionsEditor, { isNew: true });
   };
 
   const formatPrice = price => {
@@ -244,6 +306,14 @@
     handleOrderChange();
   };
 
+  const deletePaymentConditionsLine = i => {
+    if (!confirm('Tem certeza?'))
+      return;
+
+    values.paymentConditions.splice(i, 1);
+    values = { ...values };
+  };
+
   const handleSubmit = () => {
     const db = firebase.firestore();
 
@@ -282,6 +352,18 @@
       return;
     }
 
+    if (values.paymentConditions.length === 0) {
+      alert('Adicione pelo menos uma condição de pagamento!');
+      return;
+    }
+
+    if (values.observations.length > 0) {
+      if (values.observations.some(o => o.value === '')) {
+        alert('Preencha todas as observações!');
+        return;
+      }
+    }
+
     if (isCreating) {
       // Create an estimate document on firestore
       const estimateRef = db
@@ -307,6 +389,8 @@
           products: values.orders,
           professional: values.professional,
           priceTotal: values.totalPrice,
+          paymentConditions: values.paymentConditions,
+          observations: values.observations,
           created_in: firebase.firestore.FieldValue.serverTimestamp(),
           updated_in: firebase.firestore.FieldValue.serverTimestamp()
         })
@@ -343,6 +427,8 @@
           products: values.orders,
           professional: values.professional,
           priceTotal: values.totalPrice,
+          paymentConditions: values.paymentConditions,
+          observations: values.observations,
           updated_in: firebase.firestore.FieldValue.serverTimestamp()
         })
         .then(() => {
@@ -598,7 +684,136 @@
     </div>
   </div>
 
-  <div class="h-auto mt-6">
+  <!-- Payment Conditions -->
+  <div class="flex flex-col w-full gap-4 p-3 py-5 mt-5 bg-white rounded-lg shadow-md md:p-6">
+    <div class="flex items-center justify-between w-full">
+      <h2 class="text-xl">Condições de Pagamento</h2>
+
+      <!-- Add Payment Condition -->
+      <button
+        class="relative ml-auto text-sm lg:w-auto focus:outline-none sm:mt-0"
+        on:click={() => createNewPaymentCondition()}
+      >
+        <div class="flex items-center justify-center w-10 h-10 px-3 text-gray-100 rounded-full bg-main-500 md:justify-start md:rounded lg:justify-between md:w-40 hover:bg-main-600 active:bg-main-400 whitespace-nowrap">
+          <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+          </svg>
+          <span class="hidden w-full font-medium text-center md:block">
+            Adicionar
+          </span>
+        </div>
+      </button>
+    </div>
+
+    <div class="flex flex-col w-full space-y-1">
+      {#if values.paymentConditions.length === 0}
+        <div class="flex flex-col items-center justify-center w-full h-full space-y-3 text-gray-500 col-span-full">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span class="font-semibold text-md">
+            Nenhuma condição de pagamento.
+          </span>
+        </div>
+      {/if}
+
+      {#each values.paymentConditions as item, i (i)}
+        <div class="flex items-center w-full px-2 odd:bg-gray-100">
+          <span class="text-sm">Linha {i + 1}</span>
+          <div class="flex ml-auto">
+            <button
+              title="Editar"
+              class="flex items-center justify-center p-2 text-blue-500 rounded hover:bg-blue-200 active:bg-blue-100"
+              on:click={() => showPaymentConditionsEditor(i, item)}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+              </svg>
+            </button>
+            <button
+              title="Excluir"
+              class="flex items-center justify-center p-2 text-red-500 rounded hover:bg-red-200 active:bg-red-100"
+              on:click={() => deletePaymentConditionsLine(i)}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      {/each}
+    </div>
+  </div>
+
+  <!-- Observations -->
+  <div class="flex flex-col w-full gap-4 p-3 py-5 mt-5 bg-white rounded-lg shadow-md md:p-6">
+    <div class="flex items-center justify-between w-full">
+      <h2 class="text-xl">Observações</h2>
+
+      <!-- Add Observation-->
+      <button
+        class="relative ml-auto text-sm lg:w-auto focus:outline-none sm:mt-0"
+        on:click={() => {
+          values.observations.push({
+            value: ''
+          });
+          values.observations = [ ...values.observations ];
+        }}
+      >
+        <div class="flex items-center justify-center w-10 h-10 px-3 text-gray-100 rounded-full bg-main-500 md:justify-start md:rounded lg:justify-between md:w-40 hover:bg-main-600 active:bg-main-400 whitespace-nowrap">
+          <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+          </svg>
+          <span class="hidden w-full font-medium text-center md:block">
+            Adicionar
+          </span>
+        </div>
+      </button>
+    </div>
+
+    <div class="flex flex-col space-y-1 col-span-full">
+      {#if values.observations.length === 0}
+        <div class="flex flex-col items-center justify-center w-full h-full space-y-3 text-gray-500 col-span-full">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span class="font-semibold text-md">
+            Nenhuma observação.
+          </span>
+        </div>
+      {/if}
+
+      {#each values.observations as item, i (i)}
+        <div class="flex items-center w-full">
+          <InputMask
+            type="text"
+            name="title"
+            class="flex items-center w-full h-10 px-4 mr-2 text-sm border-2 rounded"
+            placeholder="Digite uma observação..."
+            unmask="typed"
+            imask={observationOptions}
+            bind:value={item.value}
+          />
+          <div class="flex ml-auto">
+            <button
+              title="Excluir"
+              class="flex items-center justify-center p-2 text-red-500 rounded hover:bg-red-200 active:bg-red-100"
+              on:click={() => {
+                values.observations.splice(i, 1);
+                values.observations = [ ...values.observations ];
+              }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      {/each}
+    </div>
+  </div>
+
+  <div class="h-auto mt-6 mb-32">
     <button
       class="flex items-center justify-center flex-shrink-0 w-full h-10 text-sm font-medium text-white rounded bg-main-500 disabled:bg-main-200 hover:bg-main-600 active:bg-main-400"
       on:click={() => handleSubmit()}

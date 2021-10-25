@@ -23,6 +23,15 @@
   setContext('orderEditReady', writable(false));
   setContext('orderEditIndex', writable(null));
 
+  setContext('newPaymentConditionInfo', writable({
+    first: '',
+    second: '',
+    third: ''
+  }));
+  setContext('newPaymentConditionReady', writable(false));
+  setContext('paymentConditionEditReady', writable(false));
+  setContext('paymentConditionEditIndex', writable(null));
+
   // Initialize Firebase
   const firebaseConfig = {
     apiKey: "AIzaSyCrf6s1jRKp4f8tl2P6qv3bHgpf5SfgYyY",

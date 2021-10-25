@@ -146,7 +146,7 @@
         bind:checked={values.is_open}
       />
       <label for="isOpenToggle" class="flex items-center justify-start w-10 h-6 px-[2px] py-1 border-2 border-gray-300 rounded-full cursor-pointer">
-        <span class="w-4 h-4 bg-blue-500 rounded-full" />
+        <span class="flex-shrink-0 w-4 h-4 bg-blue-500 rounded-full" />
       </label>
     </div>
 
@@ -215,11 +215,17 @@
 </div>
 
 <style scoped>
+  input[type="checkbox"] + label,
+  input[type="checkbox"] + label span {
+    transition: all 0.2s ease;
+  }
+
   input[type="checkbox"]:checked + label {
-    @apply justify-end border-blue-500 bg-blue-500;
+    @apply border-blue-500 bg-blue-500;
   }
 
   input[type="checkbox"]:checked + label span {
     @apply bg-white;
+    margin-left: calc(100% - 1rem);
   }
 </style>

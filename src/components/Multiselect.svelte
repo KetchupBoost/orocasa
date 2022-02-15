@@ -1,5 +1,6 @@
 <script>
   import { createEventDispatcher } from 'svelte';
+  import { select } from './removeSelect';
 
   export let title;
   export let items = {};
@@ -11,14 +12,14 @@
   const selectItem = name => {
     selected.push(name);
     selected = [ ...selected ];
-
+    select.set(true);
     dispatch('change');
   };
 
   const removeItem = name => {
     selected = selected.filter(item => item !== name);
     selected = [ ...selected ];
-
+    select.set(name);
     dispatch('change');
   };
 </script>

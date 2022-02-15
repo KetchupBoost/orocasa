@@ -33,3 +33,30 @@ No eject needed! Snowpack guarantees zero lock-in, and CSA strives for the same.
     - Quantidade: 1
     - Valor Unitário: 3
     - Valor Total: 3
+
+ - TODOs:
+   - [ ] Impedir a exclusão de um produto que está incluso em um orçamento
+   - [ ] Ao criar um orçamento, diminuir as quantidades em estoque dos produtos que estão inclusos
+   - [ ] Esconder do seletor de produtos, os produtos que não têm estoque disponível
+
+
+Email: comercial@orocasa.com.br
+Telefone: (65) 9 9911-6685
+Instagram: @orocasaoficial
+
+Carrosel com 3 fotos
+Quem somos
+Nossos produtos
+Nossas obras
+Rodapé padrão
+
+Form contato
+ - Nome
+ - E-mail
+ - Telefone
+ - Cidade
+ - Mensagem
+
+Enviar para `contato@orocasa.com.br`
+
+Botões do menu em sanduiche com hover.

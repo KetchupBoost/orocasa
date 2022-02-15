@@ -7,6 +7,9 @@
 
   import InputMask from '@/components/InputMask.svelte';
   import ProductSelect from '@/components/ProductSelect.svelte';
+  import Multiselect from '@/components/Multiselect.svelte';
+  import { is_empty } from 'svelte/internal';
+  import { select } from './removeSelect';
 
   export let isNew = false;
   export let selectedProduct = null;
@@ -15,13 +18,15 @@
   const newOrderReady = getContext('newOrderReady');
   const orderEditReady = getContext('orderEditReady');
   const orderEditIndex = getContext('orderEditIndex');
-
+  
   let values = {
     id: null,
     count: 0,
     ambient: '',
     features: {}
   };
+  let featureItems = {};
+  let selectedFeatures = [];
 
   // Input masks
   const ambientOptions = {
@@ -35,14 +40,27 @@
 
   const db = firebase.firestore();
 
+  // Fetch all feature from firebase
+  db.collection('fields')
+    .get()
+    .then(snapshot => {
+      snapshot.forEach(doc => {
+        featureItems[doc.id] = doc.data().name;
+      });
+      
+      featureItems = { ...featureItems }  ;
+    });
+
   // If we're editing an existing product order, get the data from the store
   if (!isCreating) {
     values = { ...$newOrderInfo };
-  }
+  } 
 
-  $: if (selectedProduct !== null
-         && Object.keys(values.features).length === 0) {
-    // Fetch features for the selected product
+  console.log('values features: ', values);
+
+  $: if (selectedProduct !== null && Object.keys(values.features).length === 0) {
+    
+    // Fetch feature for the selected product
     db
       .collection('products')
       .doc(selectedProduct.id)
@@ -62,12 +80,53 @@
             name: featureDoc.data().name,
             value: ''
           };
+          
+        }
+
+        if(Object.values(features).length !== 0) {
+          selectedFeatures = [ ...Object.values(product.features) ];
         }
 
         values = { ...values };
-      });
 
-    console.log('Updated features:', values.features);
+      });
+  } else if (selectedProduct !== null) {
+    // Fetch feature for the selected product
+    db
+      .collection('products')
+      .doc(selectedProduct.id)
+      .get()
+      .then(async doc => {
+        const product = doc.data();
+        const features = product.features;
+
+        for (let feature of features) {
+          // Fetch the feature name from firebase
+          const featureDoc = await db
+            .collection('fields')
+            .doc(feature)
+            .get();
+
+          values.features[feature] = {
+            name: featureDoc.data().name,
+            value: ''
+          };
+          
+        }
+        
+        // if(select === true){
+        //   selectedFeatures = Array.from(new Set(selectedFeatures.concat(...Object.keys(values.features))));
+        // } else {
+        //   console.log('select:   ',select);
+        // }
+        if(select === true){
+          selectedFeatures = Array.from(new Set(selectedFeatures.concat(...Object.values(features))));
+        } else {
+          console.log('select:   ',select);
+        }
+
+        values = { ...values };
+
   }
 
   // Helpers
@@ -76,7 +135,6 @@
   const deselectProduct = () => {
     selectedProduct = null;
 
-    values.features = {};
     values = { ...values };
   };
 
@@ -114,14 +172,31 @@
       return;
     }
 
-    for (let feature of Object.values(values.features)) {
-      if (feature.value === '') {
-        alert(`Informe o valor do atributo "${feature.name}"!`);
-        return;
-      }
+    if (is_empty(selectedFeatures)) {
+      alert('Informe algum atributo!');
+      return;
     }
 
+    // for (let feature of Object.values(values.features)) {
+    //   if (feature.value === '') {
+    //     alert(`Informe o valor do atributo "${feature.name}"!`);
+    //     return;
+    //   }
+    // }
+
     values.id = selectedProduct.id;
+
+    if(!is_empty(selectedFeatures)) {
+      db
+        .collection('products')
+        .doc(values.id)
+        .update({
+          features: selectedFeatures
+        })
+        .catch(err => {
+          alert(`Erro ao atualizar produto: ${err}`);
+        });
+    }
 
     $newOrderInfo = { ...values };
 
@@ -133,6 +208,11 @@
 
     close();
   };
+
+  function teste(testando) {
+
+    console.log('testando target: ',testando.target);
+  }
 </script>
 
 <div class="flex items-center w-full pt-8">
@@ -213,18 +293,36 @@
           </button>
         </div>
       </div>
-
       <!-- Features -->
+      <div class="col-span-full">
+        <label for="features" class="label">Atributos</label>
+        <!-- svelte-ignore missing-declaration -->
+        <Multiselect
+          title="Selecione um ou mais atributos"
+          bind:items={featureItems}
+          bind:selected={selectedFeatures}
+        />
+      </div>
+
+      <!-- Feature -->
       {#if Object.keys(values.features).length === 0}
         <div class="col-span-full">
           <div class="w-full text-sm font-semibold">
             Carregando atributos...
           </div>
         </div>
+        <div class="h-10 col-span-4 mt-3">
+          <button
+            class="w-full font-medium bg-main-500 button hover:bg-main-600 active:bg-main-400"
+            on:click={handleSubmit}
+          >
+            {isCreating ? 'Criar Ordem de Produto' : 'Salvar Alterações'}
+          </button>
+        </div>
       {:else}
         {#each Object.entries(values.features) as [key, feature] (key)}
           <div class="col-span-full">
-            <label for="feature-{key}" class="label">{feature.name}</label>
+            <label for="feature-{key}" class="label">Detalhes {values.features[key].name}</label>
 
             <Doc path={`fields/${key}`} let:data>
               {#if data.is_open}

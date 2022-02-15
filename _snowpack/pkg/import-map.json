@@ -1,0 +1,19 @@
+{
+  "imports": {
+    "@imask/svelte": "./@imask/svelte.js",
+    "firebase/app": "./firebase/app.js",
+    "firebase/auth": "./firebase/auth.js",
+    "firebase/firestore": "./firebase/firestore.js",
+    "firebase/storage": "./firebase/storage.js",
+    "imask": "./imask.js",
+    "paper-css/paper.min.css": "./paper-css/paper.min.css",
+    "rellax": "./rellax.js",
+    "slugify": "./slugify.js",
+    "svelte": "./svelte.js",
+    "svelte-router-spa": "./svelte-router-spa.js",
+    "svelte-simple-modal": "./svelte-simple-modal.js",
+    "svelte/internal": "./svelte/internal.js",
+    "svelte/store": "./svelte/store.js",
+    "sveltefire": "./sveltefire.js"
+  }
+}

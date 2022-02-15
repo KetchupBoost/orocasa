@@ -481,7 +481,7 @@
         </svg>
       </div>
       <span class="ml-8 font-semibold learn-more-hover">
-        NOSSO PORTFÓLIO
+        PORTFÓLIO
       </span>
     </button>
   </div>
@@ -509,7 +509,7 @@
       </div>
     {/if}
 
-    <h1 class="absolute projects-title top-28">Nosso Portfólio</h1>
+    <!-- <h1 class="absolute flex items-center justify-end w-full pr-40 projects-title top-28">Portfólio</h1> -->
 
     <button
       class="absolute items-center justify-center hidden w-10 h-10 lg:flex lg:left-32 lg:hover:text-yellow-400"
@@ -807,20 +807,20 @@
   }
 
   .hero h1 {
-    font-size: 725%;
+    font-size: 550%;
     font-weight: 900;
     line-height: 0.6;
     text-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
   }
 
   .hero h2 {
-    font-size: 625%;
+    font-size: 425%;
     font-weight: 500;
     text-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
   }
 
   .hero span {
-    font-size: 175%;
+    font-size: 150%;
     line-height: 1.4;
     text-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
   }
@@ -857,13 +857,13 @@
   }
 
   .about .info {
-    font-size: 175%;
+    font-size: 125%;
     line-height: 1.1;
     word-break: break-word;
   }
 
   .about .catch {
-    font-size: 700%;
+    font-size: 450%;
     font-weight: 500;
     line-height: 1;
   }
@@ -900,7 +900,7 @@
   .project-name {
     font-family: 'Swis721 BT Bold';
     color: #4C4943;
-    font-size: 450%;
+    font-size: 350%;
     font-weight: 900;
   }
 
@@ -908,7 +908,7 @@
   .project-text {
     font-family: 'Swis721 BT Bold';
     color: #4C4943;
-    font-size: 175%;
+    font-size: 125%;
     font-weight: 500;
     line-height: 1.2;
   }
@@ -916,7 +916,7 @@
   .projects-title {
     font-family: 'Swis721 BT Bold';
     color: #4C4943;
-    font-size: 200%;
+    font-size: 150%;
     font-weight: 900;
   }
 

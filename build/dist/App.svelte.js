@@ -9,14 +9,14 @@ import {
 	safe_not_equal,
 	transition_in,
 	transition_out
-} from "../_snowpack/pkg/svelte/internal.js";
+} from "svelte/internal";
 
-import { setContext } from '../_snowpack/pkg/svelte.js';
-import { writable } from '../_snowpack/pkg/svelte/store.js';
-import firebase from '../_snowpack/pkg/firebase/app.js';
-import { FirebaseApp } from '../_snowpack/pkg/sveltefire.js';
-import { Router } from '../_snowpack/pkg/svelte-router-spa.js';
-import './tailwind.css.proxy.js';
+import { setContext } from 'svelte';
+import { writable } from 'svelte/store';
+import firebase from 'firebase/app';
+import { FirebaseApp } from 'sveltefire';
+import { Router } from 'svelte-router-spa';
+import './tailwind.css';
 import { routes } from './routes.js';
 
 function create_default_slot(ctx) {

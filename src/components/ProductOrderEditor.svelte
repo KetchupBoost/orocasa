@@ -90,10 +90,10 @@
         values = { ...values };
 
       });
-  } else if (selectedProduct !== null) {
+  }
+  if (selectedProduct !== null) {
     // Fetch feature for the selected product
-    db
-      .collection('products')
+    db.collection('products')
       .doc(selectedProduct.id)
       .get()
       .then(async doc => {
@@ -126,11 +126,11 @@
         }
 
         values = { ...values };
-
-  }
+      
+  };
 
   // Helpers
-  const { close } = getContext('simple-modal');
+  const { close, } = getContext('simple-modal');
 
   const deselectProduct = () => {
     selectedProduct = null;

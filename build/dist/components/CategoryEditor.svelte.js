@@ -20,12 +20,12 @@ import {
 	text,
 	transition_in,
 	transition_out
-} from "../../_snowpack/pkg/svelte/internal.js";
+} from "svelte/internal";
 
-import { getContext, onMount } from '../../_snowpack/pkg/svelte.js';
-import firebase from '../../_snowpack/pkg/firebase/app.js';
-import '../../_snowpack/pkg/firebase/firestore.js';
-import '../../_snowpack/pkg/firebase/storage.js';
+import { getContext, onMount } from 'svelte';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/storage';
 import InputMask from './InputMask.svelte.js';
 
 function create_fragment(ctx) {

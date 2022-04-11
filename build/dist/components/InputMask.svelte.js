@@ -17,11 +17,11 @@ import {
 	run_all,
 	safe_not_equal,
 	set_attributes
-} from "svelte/internal";
+} from "../../_snowpack/pkg/svelte/internal.js";
 
-import { onMount, onDestroy, tick } from 'svelte';
-import IMaskSvelte from '@imask/svelte';
-import IMask from 'imask';
+import { onMount, onDestroy, tick } from '../../_snowpack/pkg/svelte.js';
+import IMaskSvelte from '../../_snowpack/pkg/@imask/svelte.js';
+import IMask from '../../_snowpack/pkg/imask.js';
 
 function create_fragment(ctx) {
 	let input_1;

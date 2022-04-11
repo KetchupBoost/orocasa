@@ -64,6 +64,7 @@
       .then(doc => {
         values = doc.data();
 
+        console.log('Valores:',values);
         // Fetch category title
         db
           .collection('categories')
@@ -188,6 +189,7 @@
           image: values.image,
           stock: values.stock,
           category: values.category,
+          features: selectedFeatures,
           created_in: firebase.firestore.FieldValue.serverTimestamp()
         })
         .then(() => {

@@ -1,4 +1,4 @@
-import { _ as __extends$1, a as __spreadArray, b as __awaiter, c as __generator, g as getUA, d as isSafari, e as isMobileCordova, h as isReactNative, j as isElectron, k as isIE, l as isUWP, m as isBrowserExtension, n as getModularInstance, o as createMockUserToken, L as LogLevel, p as Logger, C as Component, f as firebase } from '../common/index.esm-f5992837.js';
+import { _ as __extends$1, a as __spreadArray, b as __awaiter, c as __generator, g as getUA, d as isSafari, e as isMobileCordova, h as isReactNative, j as isElectron, k as isIE, l as isUWP, m as isBrowserExtension, n as getModularInstance, o as createMockUserToken, L as LogLevel, p as Logger, C as Component, f as firebase } from '../common/index.esm-ddc26ee1.js';
 
 /* SNOWPACK PROCESS POLYFILL (based on https://github.com/calvinmetcalf/node-process-es6) */
 function defaultSetTimout() {

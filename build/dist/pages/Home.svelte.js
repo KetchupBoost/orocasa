@@ -51,7 +51,7 @@ function create_each_block(key_1, ctx) {
 	let dispose;
 
 	function click_handler_1() {
-		return /*click_handler_1*/ ctx[27](/*i*/ ctx[41]);
+		return /*click_handler_1*/ ctx[26](/*i*/ ctx[41]);
 	}
 
 	return {
@@ -62,7 +62,7 @@ function create_each_block(key_1, ctx) {
 			div = element("div");
 			t = space();
 			attr(div, "class", div_class_value = "w-4 h-4 rounded-full " + (/*i*/ ctx[41] === /*heroIndex*/ ctx[5] && 'bg-white') + " svelte-18kfvgc");
-			attr(button, "class", "flex items-center justify-center w-6 h-6 border-2 border-white rounded-full svelte-18kfvgc");
+			attr(button, "class", "flex items-center justify-center w-6 h-6 border-2 border-white rounded-full");
 			this.first = button;
 		},
 		m(target, anchor) {
@@ -98,11 +98,11 @@ function create_if_block_1(ctx) {
 	let t0;
 	let div1;
 	let span;
-	let t1_value = /*slideItems*/ ctx[7][/*slideIndex*/ ctx[8]].name + "";
+	let t1_value = /*slideItems*/ ctx[6][/*slideIndex*/ ctx[7]].name + "";
 	let t1;
 	let t2;
 	let p;
-	let t3_value = /*slideItems*/ ctx[7][/*slideIndex*/ ctx[8]].text + "";
+	let t3_value = /*slideItems*/ ctx[6][/*slideIndex*/ ctx[7]].text + "";
 	let t3;
 	let div2_class_value;
 
@@ -119,11 +119,11 @@ function create_if_block_1(ctx) {
 			p = element("p");
 			t3 = text(t3_value);
 			attr(div0, "class", "relative h-1/3 pb-[100%] lg:w-1/3 lg:pb-[33.333333%] bg-blue-100 bg-cover");
-			set_style(div0, "background-image", "url(" + /*slideItems*/ ctx[7][/*slideIndex*/ ctx[8]].image + ")");
+			set_style(div0, "background-image", "url(" + /*slideItems*/ ctx[6][/*slideIndex*/ ctx[7]].image + ")");
 			attr(span, "class", "product-name svelte-18kfvgc");
 			attr(p, "class", "product-text svelte-18kfvgc");
 			attr(div1, "class", "flex flex-col justify-center max-w-full md:max-w-[70%] lg:max-w-lg");
-			attr(div2, "class", div2_class_value = "flex flex-col justify-center w-full space-y-8 lg:space-y-0 lg:space-x-16 lg:flex-row " + (/*slideTransition*/ ctx[9] ? 'opacity-0' : 'opacity-100'));
+			attr(div2, "class", div2_class_value = "flex flex-col justify-center w-full space-y-8 lg:space-y-0 lg:space-x-16 lg:flex-row " + (/*slideTransition*/ ctx[8] ? 'opacity-0' : 'opacity-100'));
 			set_style(div2, "transition", "opacity 0.3s ease");
 			attr(div3, "class", "w-full");
 		},
@@ -140,14 +140,14 @@ function create_if_block_1(ctx) {
 			append(p, t3);
 		},
 		p(ctx, dirty) {
-			if (dirty[0] & /*slideItems, slideIndex*/ 384) {
-				set_style(div0, "background-image", "url(" + /*slideItems*/ ctx[7][/*slideIndex*/ ctx[8]].image + ")");
+			if (dirty[0] & /*slideItems, slideIndex*/ 192) {
+				set_style(div0, "background-image", "url(" + /*slideItems*/ ctx[6][/*slideIndex*/ ctx[7]].image + ")");
 			}
 
-			if (dirty[0] & /*slideItems, slideIndex*/ 384 && t1_value !== (t1_value = /*slideItems*/ ctx[7][/*slideIndex*/ ctx[8]].name + "")) set_data(t1, t1_value);
-			if (dirty[0] & /*slideItems, slideIndex*/ 384 && t3_value !== (t3_value = /*slideItems*/ ctx[7][/*slideIndex*/ ctx[8]].text + "")) set_data(t3, t3_value);
+			if (dirty[0] & /*slideItems, slideIndex*/ 192 && t1_value !== (t1_value = /*slideItems*/ ctx[6][/*slideIndex*/ ctx[7]].name + "")) set_data(t1, t1_value);
+			if (dirty[0] & /*slideItems, slideIndex*/ 192 && t3_value !== (t3_value = /*slideItems*/ ctx[6][/*slideIndex*/ ctx[7]].text + "")) set_data(t3, t3_value);
 
-			if (dirty[0] & /*slideTransition*/ 512 && div2_class_value !== (div2_class_value = "flex flex-col justify-center w-full space-y-8 lg:space-y-0 lg:space-x-16 lg:flex-row " + (/*slideTransition*/ ctx[9] ? 'opacity-0' : 'opacity-100'))) {
+			if (dirty[0] & /*slideTransition*/ 256 && div2_class_value !== (div2_class_value = "flex flex-col justify-center w-full space-y-8 lg:space-y-0 lg:space-x-16 lg:flex-row " + (/*slideTransition*/ ctx[8] ? 'opacity-0' : 'opacity-100'))) {
 				attr(div2, "class", div2_class_value);
 			}
 		},
@@ -165,11 +165,11 @@ function create_if_block(ctx) {
 	let t0;
 	let div1;
 	let span;
-	let t1_value = /*prSlideItems*/ ctx[10][/*prSlideIndex*/ ctx[11]].name + "";
+	let t1_value = /*prSlideItems*/ ctx[9][/*prSlideIndex*/ ctx[10]].name + "";
 	let t1;
 	let t2;
 	let p;
-	let t3_value = /*prSlideItems*/ ctx[10][/*prSlideIndex*/ ctx[11]].text + "";
+	let t3_value = /*prSlideItems*/ ctx[9][/*prSlideIndex*/ ctx[10]].text + "";
 	let t3;
 	let div2_class_value;
 
@@ -186,12 +186,12 @@ function create_if_block(ctx) {
 			p = element("p");
 			t3 = text(t3_value);
 			attr(div0, "class", "relative h-1/3 pb-[100%] lg:w-1/3 lg:pb-[33.333333%] bg-blue-100 bg-cover");
-			set_style(div0, "background-image", "url(" + /*prSlideItems*/ ctx[10][/*prSlideIndex*/ ctx[11]].image + ")");
+			set_style(div0, "background-image", "url(" + /*prSlideItems*/ ctx[9][/*prSlideIndex*/ ctx[10]].image + ")");
 			attr(span, "class", "project-name svelte-18kfvgc");
 			attr(p, "class", "project-text svelte-18kfvgc");
 			attr(div1, "class", "flex flex-col justify-center max-w-full md:max-w-[70%] lg:max-w-lg");
 
-			attr(div2, "class", div2_class_value = "flex flex-col justify-center w-full space-y-8 lg:space-y-0 lg:space-x-16 lg:flex-row " + (/*prSlideTransition*/ ctx[12]
+			attr(div2, "class", div2_class_value = "flex flex-col justify-center w-full space-y-8 lg:space-y-0 lg:space-x-16 lg:flex-row " + (/*prSlideTransition*/ ctx[11]
 			? 'opacity-0'
 			: 'opacity-100'));
 
@@ -211,14 +211,14 @@ function create_if_block(ctx) {
 			append(p, t3);
 		},
 		p(ctx, dirty) {
-			if (dirty[0] & /*prSlideItems, prSlideIndex*/ 3072) {
-				set_style(div0, "background-image", "url(" + /*prSlideItems*/ ctx[10][/*prSlideIndex*/ ctx[11]].image + ")");
+			if (dirty[0] & /*prSlideItems, prSlideIndex*/ 1536) {
+				set_style(div0, "background-image", "url(" + /*prSlideItems*/ ctx[9][/*prSlideIndex*/ ctx[10]].image + ")");
 			}
 
-			if (dirty[0] & /*prSlideItems, prSlideIndex*/ 3072 && t1_value !== (t1_value = /*prSlideItems*/ ctx[10][/*prSlideIndex*/ ctx[11]].name + "")) set_data(t1, t1_value);
-			if (dirty[0] & /*prSlideItems, prSlideIndex*/ 3072 && t3_value !== (t3_value = /*prSlideItems*/ ctx[10][/*prSlideIndex*/ ctx[11]].text + "")) set_data(t3, t3_value);
+			if (dirty[0] & /*prSlideItems, prSlideIndex*/ 1536 && t1_value !== (t1_value = /*prSlideItems*/ ctx[9][/*prSlideIndex*/ ctx[10]].name + "")) set_data(t1, t1_value);
+			if (dirty[0] & /*prSlideItems, prSlideIndex*/ 1536 && t3_value !== (t3_value = /*prSlideItems*/ ctx[9][/*prSlideIndex*/ ctx[10]].text + "")) set_data(t3, t3_value);
 
-			if (dirty[0] & /*prSlideTransition*/ 4096 && div2_class_value !== (div2_class_value = "flex flex-col justify-center w-full space-y-8 lg:space-y-0 lg:space-x-16 lg:flex-row " + (/*prSlideTransition*/ ctx[12]
+			if (dirty[0] & /*prSlideTransition*/ 2048 && div2_class_value !== (div2_class_value = "flex flex-col justify-center w-full space-y-8 lg:space-y-0 lg:space-x-16 lg:flex-row " + (/*prSlideTransition*/ ctx[11]
 			? 'opacity-0'
 			: 'opacity-100'))) {
 				attr(div2, "class", div2_class_value);
@@ -270,7 +270,6 @@ function create_fragment(ctx) {
 	let button1;
 	let t20;
 	let div11;
-	let div12_class_value;
 	let t21;
 	let div21;
 	let div13;
@@ -353,11 +352,11 @@ function create_fragment(ctx) {
 		each_1_lookup.set(key, each_blocks[i] = create_each_block(key, child_ctx));
 	}
 
-	let if_block0 = /*slideItems*/ ctx[7].length > 0 && create_if_block_1(ctx);
-	let if_block1 = /*prSlideItems*/ ctx[10].length > 0 && create_if_block(ctx);
+	let if_block0 = /*slideItems*/ ctx[6].length > 0 && create_if_block_1(ctx);
+	let if_block1 = /*prSlideItems*/ ctx[9].length > 0 && create_if_block(ctx);
 
 	function inputmask0_value_binding(value) {
-		/*inputmask0_value_binding*/ ctx[32](value);
+		/*inputmask0_value_binding*/ ctx[31](value);
 	}
 
 	let inputmask0_props = {
@@ -366,18 +365,18 @@ function create_fragment(ctx) {
 		placeholder: "Nome",
 		class: "flex items-center w-full h-10 px-4 mt-3 text-sm bg-transparent border-2 border-[#4c494373] rounded placeholder-[#4C4943]",
 		unmask: "typed",
-		imask: /*nameOptions*/ ctx[14]
+		imask: /*nameOptions*/ ctx[13]
 	};
 
-	if (/*values*/ ctx[13].name !== void 0) {
-		inputmask0_props.value = /*values*/ ctx[13].name;
+	if (/*values*/ ctx[12].name !== void 0) {
+		inputmask0_props.value = /*values*/ ctx[12].name;
 	}
 
 	inputmask0 = new InputMask({ props: inputmask0_props });
 	binding_callbacks.push(() => bind(inputmask0, 'value', inputmask0_value_binding));
 
 	function inputmask1_value_binding(value) {
-		/*inputmask1_value_binding*/ ctx[33](value);
+		/*inputmask1_value_binding*/ ctx[32](value);
 	}
 
 	let inputmask1_props = {
@@ -386,18 +385,18 @@ function create_fragment(ctx) {
 		placeholder: "E-mail",
 		class: "flex items-center w-full h-10 px-4 text-sm bg-transparent border-2 border-[#4c494373] rounded placeholder-[#4C4943]",
 		unmask: "typed",
-		imask: /*emailOptions*/ ctx[15]
+		imask: /*emailOptions*/ ctx[14]
 	};
 
-	if (/*values*/ ctx[13].email !== void 0) {
-		inputmask1_props.value = /*values*/ ctx[13].email;
+	if (/*values*/ ctx[12].email !== void 0) {
+		inputmask1_props.value = /*values*/ ctx[12].email;
 	}
 
 	inputmask1 = new InputMask({ props: inputmask1_props });
 	binding_callbacks.push(() => bind(inputmask1, 'value', inputmask1_value_binding));
 
 	function inputmask2_value_binding(value) {
-		/*inputmask2_value_binding*/ ctx[34](value);
+		/*inputmask2_value_binding*/ ctx[33](value);
 	}
 
 	let inputmask2_props = {
@@ -406,18 +405,18 @@ function create_fragment(ctx) {
 		placeholder: "Telefone",
 		class: "flex items-center w-full h-10 px-4 text-sm bg-transparent border-2 border-[#4c494373] rounded placeholder-[#4C4943]",
 		unmask: "typed",
-		imask: /*phoneOptions*/ ctx[16]
+		imask: /*phoneOptions*/ ctx[15]
 	};
 
-	if (/*values*/ ctx[13].phone !== void 0) {
-		inputmask2_props.value = /*values*/ ctx[13].phone;
+	if (/*values*/ ctx[12].phone !== void 0) {
+		inputmask2_props.value = /*values*/ ctx[12].phone;
 	}
 
 	inputmask2 = new InputMask({ props: inputmask2_props });
 	binding_callbacks.push(() => bind(inputmask2, 'value', inputmask2_value_binding));
 
 	function inputmask3_value_binding(value) {
-		/*inputmask3_value_binding*/ ctx[35](value);
+		/*inputmask3_value_binding*/ ctx[34](value);
 	}
 
 	let inputmask3_props = {
@@ -426,18 +425,18 @@ function create_fragment(ctx) {
 		placeholder: "Cidade",
 		class: "flex items-center w-full h-10 px-4 text-sm bg-transparent border-2 border-[#4c494373] rounded placeholder-[#4C4943]",
 		unmask: "typed",
-		imask: /*cityOptions*/ ctx[17]
+		imask: /*cityOptions*/ ctx[16]
 	};
 
-	if (/*values*/ ctx[13].city !== void 0) {
-		inputmask3_props.value = /*values*/ ctx[13].city;
+	if (/*values*/ ctx[12].city !== void 0) {
+		inputmask3_props.value = /*values*/ ctx[12].city;
 	}
 
 	inputmask3 = new InputMask({ props: inputmask3_props });
 	binding_callbacks.push(() => bind(inputmask3, 'value', inputmask3_value_binding));
 
 	function textareamask_value_binding(value) {
-		/*textareamask_value_binding*/ ctx[36](value);
+		/*textareamask_value_binding*/ ctx[35](value);
 	}
 
 	let textareamask_props = {
@@ -445,11 +444,11 @@ function create_fragment(ctx) {
 		placeholder: "Mensagem...",
 		class: "w-full h-28 lg:h-60 p-4 text-sm bg-transparent border-2 border-[#4c494373] rounded placeholder-[#4C4943]",
 		unmask: "typed",
-		imask: /*messageOptions*/ ctx[18]
+		imask: /*messageOptions*/ ctx[17]
 	};
 
-	if (/*values*/ ctx[13].message !== void 0) {
-		textareamask_props.value = /*values*/ ctx[13].message;
+	if (/*values*/ ctx[12].message !== void 0) {
+		textareamask_props.value = /*values*/ ctx[12].message;
 	}
 
 	textareamask = new TextareaMask({ props: textareamask_props });
@@ -619,7 +618,7 @@ function create_fragment(ctx) {
 			t67 = space();
 			div36 = element("div");
 			span10 = element("span");
-			span10.textContent = `Copyright © ${/*getCurrentYear*/ ctx[24]()}`;
+			span10.textContent = `Copyright © ${/*getCurrentYear*/ ctx[23]()}`;
 			t70 = space();
 			a11 = element("a");
 			a11.innerHTML = `<div style="background-image:url(/images/brand_saikoo.png);" class="w-[100px] bg-cover h-7"></div>`;
@@ -641,7 +640,7 @@ function create_fragment(ctx) {
 			attr(button1, "class", "flex items-center w-auto pr-8 mt-6 text-white learn-more svelte-18kfvgc");
 			attr(div10, "class", "z-20 flex flex-col items-start w-screen px-10 pb-20 select-none lg:px-0 lg:w-3/6");
 			attr(div11, "class", "hidden lg:flex lg:w-2/6");
-			attr(div12, "class", div12_class_value = "flex items-end justify-center w-screen h-screen rellax intro " + (/*heroTransition*/ ctx[6] && 'opacity-70') + " svelte-18kfvgc");
+			attr(div12, "class", "flex items-end justify-center w-screen h-screen rellax intro  svelte-18kfvgc");
 
 			set_style(div12, "background-image", "url(" + (/*heroImages*/ ctx[3].length > 0
 			? /*heroImages*/ ctx[3][/*heroIndex*/ ctx[5]].url
@@ -801,16 +800,16 @@ function create_fragment(ctx) {
 
 			if (!mounted) {
 				dispose = [
-					listen(button0, "click", /*click_handler*/ ctx[26]),
-					listen(button1, "click", /*click_handler_2*/ ctx[28]),
-					listen(button2, "click", /*click_handler_3*/ ctx[29]),
-					listen(button3, "click", /*previousSlide*/ ctx[21]),
-					listen(button4, "click", /*nextSlide*/ ctx[20]),
-					listen(button5, "click", /*click_handler_4*/ ctx[30]),
-					listen(button6, "click", /*previousPrSlide*/ ctx[23]),
-					listen(button7, "click", /*nextPrSlide*/ ctx[22]),
-					listen(button8, "click", /*click_handler_5*/ ctx[31]),
-					listen(button9, "click", /*handleSubmitContact*/ ctx[25])
+					listen(button0, "click", /*click_handler*/ ctx[25]),
+					listen(button1, "click", /*click_handler_2*/ ctx[27]),
+					listen(button2, "click", /*click_handler_3*/ ctx[28]),
+					listen(button3, "click", /*previousSlide*/ ctx[20]),
+					listen(button4, "click", /*nextSlide*/ ctx[19]),
+					listen(button5, "click", /*click_handler_4*/ ctx[29]),
+					listen(button6, "click", /*previousPrSlide*/ ctx[22]),
+					listen(button7, "click", /*nextPrSlide*/ ctx[21]),
+					listen(button8, "click", /*click_handler_5*/ ctx[30]),
+					listen(button9, "click", /*handleSubmitContact*/ ctx[24])
 				];
 
 				mounted = true;
@@ -830,10 +829,6 @@ function create_fragment(ctx) {
 			if ((!current || dirty[0] & /*heroData*/ 4) && t14_value !== (t14_value = /*heroData*/ ctx[2].subtitle + "")) set_data(t14, t14_value);
 			if ((!current || dirty[0] & /*heroData*/ 4) && t16_value !== (t16_value = /*heroData*/ ctx[2].text + "")) set_data(t16, t16_value);
 
-			if (!current || dirty[0] & /*heroTransition*/ 64 && div12_class_value !== (div12_class_value = "flex items-end justify-center w-screen h-screen rellax intro " + (/*heroTransition*/ ctx[6] && 'opacity-70') + " svelte-18kfvgc")) {
-				attr(div12, "class", div12_class_value);
-			}
-
 			if (!current || dirty[0] & /*heroImages, heroIndex*/ 40) {
 				set_style(div12, "background-image", "url(" + (/*heroImages*/ ctx[3].length > 0
 				? /*heroImages*/ ctx[3][/*heroIndex*/ ctx[5]].url
@@ -843,7 +838,7 @@ function create_fragment(ctx) {
 			if ((!current || dirty[0] & /*aboutData*/ 16) && t25_value !== (t25_value = /*aboutData*/ ctx[4].text + "")) set_data(t25, t25_value);
 			if ((!current || dirty[0] & /*aboutData*/ 16) && raw_value !== (raw_value = /*aboutData*/ ctx[4].header + "")) h11.innerHTML = raw_value;;
 
-			if (/*slideItems*/ ctx[7].length > 0) {
+			if (/*slideItems*/ ctx[6].length > 0) {
 				if (if_block0) {
 					if_block0.p(ctx, dirty);
 				} else {
@@ -856,7 +851,7 @@ function create_fragment(ctx) {
 				if_block0 = null;
 			}
 
-			if (/*prSlideItems*/ ctx[10].length > 0) {
+			if (/*prSlideItems*/ ctx[9].length > 0) {
 				if (if_block1) {
 					if_block1.p(ctx, dirty);
 				} else {
@@ -871,45 +866,45 @@ function create_fragment(ctx) {
 
 			const inputmask0_changes = {};
 
-			if (!updating_value && dirty[0] & /*values*/ 8192) {
+			if (!updating_value && dirty[0] & /*values*/ 4096) {
 				updating_value = true;
-				inputmask0_changes.value = /*values*/ ctx[13].name;
+				inputmask0_changes.value = /*values*/ ctx[12].name;
 				add_flush_callback(() => updating_value = false);
 			}
 
 			inputmask0.$set(inputmask0_changes);
 			const inputmask1_changes = {};
 
-			if (!updating_value_1 && dirty[0] & /*values*/ 8192) {
+			if (!updating_value_1 && dirty[0] & /*values*/ 4096) {
 				updating_value_1 = true;
-				inputmask1_changes.value = /*values*/ ctx[13].email;
+				inputmask1_changes.value = /*values*/ ctx[12].email;
 				add_flush_callback(() => updating_value_1 = false);
 			}
 
 			inputmask1.$set(inputmask1_changes);
 			const inputmask2_changes = {};
 
-			if (!updating_value_2 && dirty[0] & /*values*/ 8192) {
+			if (!updating_value_2 && dirty[0] & /*values*/ 4096) {
 				updating_value_2 = true;
-				inputmask2_changes.value = /*values*/ ctx[13].phone;
+				inputmask2_changes.value = /*values*/ ctx[12].phone;
 				add_flush_callback(() => updating_value_2 = false);
 			}
 
 			inputmask2.$set(inputmask2_changes);
 			const inputmask3_changes = {};
 
-			if (!updating_value_3 && dirty[0] & /*values*/ 8192) {
+			if (!updating_value_3 && dirty[0] & /*values*/ 4096) {
 				updating_value_3 = true;
-				inputmask3_changes.value = /*values*/ ctx[13].city;
+				inputmask3_changes.value = /*values*/ ctx[12].city;
 				add_flush_callback(() => updating_value_3 = false);
 			}
 
 			inputmask3.$set(inputmask3_changes);
 			const textareamask_changes = {};
 
-			if (!updating_value_4 && dirty[0] & /*values*/ 8192) {
+			if (!updating_value_4 && dirty[0] & /*values*/ 4096) {
 				updating_value_4 = true;
-				textareamask_changes.value = /*values*/ ctx[13].message;
+				textareamask_changes.value = /*values*/ ctx[12].message;
 				add_flush_callback(() => updating_value_4 = false);
 			}
 
@@ -985,8 +980,8 @@ function instance($$self, $$props, $$invalidate) {
 			text: data.about_text
 		});
 
-		$$invalidate(7, slideItems = data.slide_items);
-		$$invalidate(10, prSlideItems = data.project_slide_items);
+		$$invalidate(6, slideItems = data.slide_items);
+		$$invalidate(9, prSlideItems = data.project_slide_items);
 	});
 
 	const values = {
@@ -1074,7 +1069,7 @@ function instance($$self, $$props, $$invalidate) {
 	};
 
 	const nextHero = () => {
-		$$invalidate(6, heroTransition = true);
+		heroTransition = true;
 
 		setTimeout(
 			() => {
@@ -1084,75 +1079,75 @@ function instance($$self, $$props, $$invalidate) {
 					$$invalidate(5, heroIndex++, heroIndex);
 				}
 
-				$$invalidate(6, heroTransition = false);
+				heroTransition = false;
 			},
 			300
 		);
 	};
 
 	const nextSlide = () => {
-		$$invalidate(9, slideTransition = true);
+		$$invalidate(8, slideTransition = true);
 
 		setTimeout(
 			() => {
 				if (slideIndex === slideItems.length - 1) {
-					$$invalidate(8, slideIndex = 0);
+					$$invalidate(7, slideIndex = 0);
 				} else {
-					$$invalidate(8, slideIndex++, slideIndex);
+					$$invalidate(7, slideIndex++, slideIndex);
 				}
 
-				$$invalidate(9, slideTransition = false);
+				$$invalidate(8, slideTransition = false);
 			},
 			300
 		);
 	};
 
 	const previousSlide = () => {
-		$$invalidate(9, slideTransition = true);
+		$$invalidate(8, slideTransition = true);
 
 		setTimeout(
 			() => {
 				if (slideIndex === 0) {
-					$$invalidate(8, slideIndex = slideItems.length - 1);
+					$$invalidate(7, slideIndex = slideItems.length - 1);
 				} else {
-					$$invalidate(8, slideIndex--, slideIndex);
+					$$invalidate(7, slideIndex--, slideIndex);
 				}
 
-				$$invalidate(9, slideTransition = false);
+				$$invalidate(8, slideTransition = false);
 			},
 			300
 		);
 	};
 
 	const nextPrSlide = () => {
-		$$invalidate(12, prSlideTransition = true);
+		$$invalidate(11, prSlideTransition = true);
 
 		setTimeout(
 			() => {
 				if (prSlideIndex === prSlideItems.length - 1) {
-					$$invalidate(11, prSlideIndex = 0);
+					$$invalidate(10, prSlideIndex = 0);
 				} else {
-					$$invalidate(11, prSlideIndex++, prSlideIndex);
+					$$invalidate(10, prSlideIndex++, prSlideIndex);
 				}
 
-				$$invalidate(12, prSlideTransition = false);
+				$$invalidate(11, prSlideTransition = false);
 			},
 			300
 		);
 	};
 
 	const previousPrSlide = () => {
-		$$invalidate(12, prSlideTransition = true);
+		$$invalidate(11, prSlideTransition = true);
 
 		setTimeout(
 			() => {
 				if (prSlideIndex === 0) {
-					$$invalidate(11, prSlideIndex = prSlideItems.length - 1);
+					$$invalidate(10, prSlideIndex = prSlideItems.length - 1);
 				} else {
-					$$invalidate(11, prSlideIndex--, prSlideIndex);
+					$$invalidate(10, prSlideIndex--, prSlideIndex);
 				}
 
-				$$invalidate(12, prSlideTransition = false);
+				$$invalidate(11, prSlideTransition = false);
 			},
 			300
 		);
@@ -1177,11 +1172,11 @@ function instance($$self, $$props, $$invalidate) {
 			}
 		}).then(() => {
 			console.log('E-mail adicionado à fila para envio.');
-			$$invalidate(13, values.name = '', values);
-			$$invalidate(13, values.email = '', values);
-			$$invalidate(13, values.phone = '', values);
-			$$invalidate(13, values.city = '', values);
-			$$invalidate(13, values.message = '', values);
+			$$invalidate(12, values.name = '', values);
+			$$invalidate(12, values.email = '', values);
+			$$invalidate(12, values.phone = '', values);
+			$$invalidate(12, values.city = '', values);
+			$$invalidate(12, values.message = '', values);
 		}).catch(err => {
 			console.error('Erro ao tentar enviar e-mail:', err);
 		});
@@ -1197,35 +1192,35 @@ function instance($$self, $$props, $$invalidate) {
 	function inputmask0_value_binding(value) {
 		if ($$self.$$.not_equal(values.name, value)) {
 			values.name = value;
-			$$invalidate(13, values);
+			$$invalidate(12, values);
 		}
 	}
 
 	function inputmask1_value_binding(value) {
 		if ($$self.$$.not_equal(values.email, value)) {
 			values.email = value;
-			$$invalidate(13, values);
+			$$invalidate(12, values);
 		}
 	}
 
 	function inputmask2_value_binding(value) {
 		if ($$self.$$.not_equal(values.phone, value)) {
 			values.phone = value;
-			$$invalidate(13, values);
+			$$invalidate(12, values);
 		}
 	}
 
 	function inputmask3_value_binding(value) {
 		if ($$self.$$.not_equal(values.city, value)) {
 			values.city = value;
-			$$invalidate(13, values);
+			$$invalidate(12, values);
 		}
 	}
 
 	function textareamask_value_binding(value) {
 		if ($$self.$$.not_equal(values.message, value)) {
 			values.message = value;
-			$$invalidate(13, values);
+			$$invalidate(12, values);
 		}
 	}
 
@@ -1236,7 +1231,6 @@ function instance($$self, $$props, $$invalidate) {
 		heroImages,
 		aboutData,
 		heroIndex,
-		heroTransition,
 		slideItems,
 		slideIndex,
 		slideTransition,

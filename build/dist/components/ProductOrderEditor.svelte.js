@@ -45,24 +45,26 @@ import '../../_snowpack/pkg/firebase/storage.js';
 import InputMask from './InputMask.svelte.js';
 import ProductSelect from './ProductSelect.svelte.js';
 import Multiselect from './Multiselect.svelte.js';
+import { is_empty } from '../../_snowpack/pkg/svelte/internal.js';
+import { select } from './removeSelect.js';
 
 function get_each_context(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[30] = list[i][0];
-	child_ctx[31] = list[i][1];
-	child_ctx[32] = list;
-	child_ctx[33] = i;
+	child_ctx[31] = list[i][0];
+	child_ctx[32] = list[i][1];
+	child_ctx[33] = list;
+	child_ctx[34] = i;
 	return child_ctx;
 }
 
 function get_each_context_1(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[35] = list[i];
-	child_ctx[37] = i;
+	child_ctx[36] = list[i];
+	child_ctx[38] = i;
 	return child_ctx;
 }
 
-// (178:4) {:else}
+// (206:4) {:else}
 function create_else_block(ctx) {
 	let div4;
 	let label0;
@@ -113,7 +115,7 @@ function create_else_block(ctx) {
 	let dispose;
 
 	function inputmask_value_binding(value) {
-		/*inputmask_value_binding*/ ctx[18](value);
+		/*inputmask_value_binding*/ ctx[19](value);
 	}
 
 	let inputmask_props = {
@@ -132,11 +134,11 @@ function create_else_block(ctx) {
 	binding_callbacks.push(() => bind(inputmask, 'value', inputmask_value_binding));
 
 	function multiselect_items_binding(value) {
-		/*multiselect_items_binding*/ ctx[20](value);
+		/*multiselect_items_binding*/ ctx[21](value);
 	}
 
 	function multiselect_selected_binding(value) {
-		/*multiselect_selected_binding*/ ctx[21](value);
+		/*multiselect_selected_binding*/ ctx[22](value);
 	}
 
 	let multiselect_props = { title: "Selecione um ou mais atributos" };
@@ -291,7 +293,7 @@ function create_else_block(ctx) {
 				dispose = [
 					listen(button0, "click", /*deselectProduct*/ ctx[11]),
 					listen(button1, "click", /*decreaseCount*/ ctx[12]),
-					listen(input, "input", /*input_input_handler*/ ctx[19]),
+					listen(input, "input", /*input_input_handler*/ ctx[20]),
 					listen(input, "change", /*handleCountChange*/ ctx[14]),
 					listen(button2, "click", /*increaseCount*/ ctx[13])
 				];
@@ -396,7 +398,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (172:4) {#if selectedProduct === null}
+// (200:4) {#if selectedProduct === null}
 function create_if_block(ctx) {
 	let div;
 	let label;
@@ -406,7 +408,7 @@ function create_if_block(ctx) {
 	let current;
 
 	function productselect_selected_binding(value) {
-		/*productselect_selected_binding*/ ctx[17](value);
+		/*productselect_selected_binding*/ ctx[18](value);
 	}
 
 	let productselect_props = {};
@@ -463,7 +465,7 @@ function create_if_block(ctx) {
 	};
 }
 
-// (274:6) {:else}
+// (303:6) {:else}
 function create_else_block_1(ctx) {
 	let each_blocks = [];
 	let each_1_lookup = new Map();
@@ -474,7 +476,7 @@ function create_else_block_1(ctx) {
 	let mounted;
 	let dispose;
 	let each_value = Object.entries(/*values*/ ctx[1].features);
-	const get_key = ctx => /*key*/ ctx[30];
+	const get_key = ctx => /*key*/ ctx[31];
 
 	for (let i = 0; i < each_value.length; i += 1) {
 		let child_ctx = get_each_context(ctx, each_value, i);
@@ -515,7 +517,7 @@ function create_else_block_1(ctx) {
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty[0] & /*values, featureValueOptions*/ 514 | dirty[1] & /*data*/ 8) {
+			if (dirty[0] & /*values, featureValueOptions*/ 514 | dirty[1] & /*data*/ 16) {
 				each_value = Object.entries(/*values*/ ctx[1].features);
 				group_outros();
 				each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx, each_value, each_1_lookup, t0.parentNode, outro_and_destroy_block, create_each_block, t0, get_each_context);
@@ -551,7 +553,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (260:6) {#if Object.keys(values.features).length === 0}
+// (289:6) {#if Object.keys(values.features).length === 0}
 function create_if_block_1(ctx) {
 	let div1;
 	let t1;
@@ -600,12 +602,12 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (289:14) {:else}
+// (318:14) {:else}
 function create_else_block_2(ctx) {
 	let button;
 	let div0;
 	let span;
-	let t0_value = /*values*/ ctx[1].features[/*key*/ ctx[30]].value + "";
+	let t0_value = /*values*/ ctx[1].features[/*key*/ ctx[31]].value + "";
 	let t0;
 	let t1;
 	let svg;
@@ -614,8 +616,8 @@ function create_else_block_2(ctx) {
 	let div1;
 	let each_blocks = [];
 	let each_1_lookup = new Map();
-	let each_value_1 = /*data*/ ctx[34].values;
-	const get_key = ctx => /*i*/ ctx[37];
+	let each_value_1 = /*data*/ ctx[35].values;
+	const get_key = ctx => /*i*/ ctx[38];
 
 	for (let i = 0; i < each_value_1.length; i += 1) {
 		let child_ctx = get_each_context_1(ctx, each_value_1, i);
@@ -667,10 +669,10 @@ function create_else_block_2(ctx) {
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty[0] & /*values*/ 2 && t0_value !== (t0_value = /*values*/ ctx[1].features[/*key*/ ctx[30]].value + "")) set_data(t0, t0_value);
+			if (dirty[0] & /*values*/ 2 && t0_value !== (t0_value = /*values*/ ctx[1].features[/*key*/ ctx[31]].value + "")) set_data(t0, t0_value);
 
-			if (dirty[0] & /*values*/ 2 | dirty[1] & /*data*/ 8) {
-				each_value_1 = /*data*/ ctx[34].values;
+			if (dirty[0] & /*values*/ 2 | dirty[1] & /*data*/ 16) {
+				each_value_1 = /*data*/ ctx[35].values;
 				each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx, each_value_1, each_1_lookup, div1, destroy_block, create_each_block_1, null, get_each_context_1);
 			}
 		},
@@ -686,26 +688,26 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (280:14) {#if data.is_open}
+// (309:14) {#if data.is_open}
 function create_if_block_2(ctx) {
 	let inputmask;
 	let updating_value;
 	let current;
 
 	function inputmask_value_binding_1(value) {
-		/*inputmask_value_binding_1*/ ctx[22](value, /*key*/ ctx[30]);
+		/*inputmask_value_binding_1*/ ctx[23](value, /*key*/ ctx[31]);
 	}
 
 	let inputmask_props = {
 		type: "text",
-		name: "feature-" + /*key*/ ctx[30],
+		name: "feature-" + /*key*/ ctx[31],
 		class: "flex items-center w-full h-10 px-4 mt-1 text-sm border-2 rounded",
 		unmask: "typed",
 		imask: /*featureValueOptions*/ ctx[9]
 	};
 
-	if (/*values*/ ctx[1].features[/*key*/ ctx[30]].value !== void 0) {
-		inputmask_props.value = /*values*/ ctx[1].features[/*key*/ ctx[30]].value;
+	if (/*values*/ ctx[1].features[/*key*/ ctx[31]].value !== void 0) {
+		inputmask_props.value = /*values*/ ctx[1].features[/*key*/ ctx[31]].value;
 	}
 
 	inputmask = new InputMask({ props: inputmask_props });
@@ -722,11 +724,11 @@ function create_if_block_2(ctx) {
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
 			const inputmask_changes = {};
-			if (dirty[0] & /*values*/ 2) inputmask_changes.name = "feature-" + /*key*/ ctx[30];
+			if (dirty[0] & /*values*/ 2) inputmask_changes.name = "feature-" + /*key*/ ctx[31];
 
 			if (!updating_value && dirty[0] & /*values*/ 2) {
 				updating_value = true;
-				inputmask_changes.value = /*values*/ ctx[1].features[/*key*/ ctx[30]].value;
+				inputmask_changes.value = /*values*/ ctx[1].features[/*key*/ ctx[31]].value;
 				add_flush_callback(() => updating_value = false);
 			}
 
@@ -747,16 +749,16 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (300:20) {#each data.values as item, i (i)}
+// (329:20) {#each data.values as item, i (i)}
 function create_each_block_1(key_1, ctx) {
 	let button;
-	let t_value = /*item*/ ctx[35].value + "";
+	let t_value = /*item*/ ctx[36].value + "";
 	let t;
 	let mounted;
 	let dispose;
 
 	function click_handler() {
-		return /*click_handler*/ ctx[23](/*key*/ ctx[30], /*item*/ ctx[35]);
+		return /*click_handler*/ ctx[24](/*key*/ ctx[31], /*item*/ ctx[36]);
 	}
 
 	return {
@@ -779,7 +781,7 @@ function create_each_block_1(key_1, ctx) {
 		},
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
-			if (dirty[1] & /*data*/ 8 && t_value !== (t_value = /*item*/ ctx[35].value + "")) set_data(t, t_value);
+			if (dirty[1] & /*data*/ 16 && t_value !== (t_value = /*item*/ ctx[36].value + "")) set_data(t, t_value);
 		},
 		d(detaching) {
 			if (detaching) detach(button);
@@ -789,7 +791,7 @@ function create_each_block_1(key_1, ctx) {
 	};
 }
 
-// (279:12) <Doc path={`fields/${key}`} let:data>
+// (308:12) <Doc path={`fields/${key}`} let:data>
 function create_default_slot(ctx) {
 	let current_block_type_index;
 	let if_block;
@@ -799,7 +801,7 @@ function create_default_slot(ctx) {
 	const if_blocks = [];
 
 	function select_block_type_2(ctx, dirty) {
-		if (/*data*/ ctx[34].is_open) return 0;
+		if (/*data*/ ctx[35].is_open) return 0;
 		return 1;
 	}
 
@@ -859,12 +861,12 @@ function create_default_slot(ctx) {
 	};
 }
 
-// (275:8) {#each Object.entries(values.features) as [key, feature] (key)}
+// (304:8) {#each Object.entries(values.features) as [key, feature] (key)}
 function create_each_block(key_1, ctx) {
 	let div;
 	let label;
 	let t0;
-	let t1_value = /*values*/ ctx[1].features[/*key*/ ctx[30]].name + "";
+	let t1_value = /*values*/ ctx[1].features[/*key*/ ctx[31]].name + "";
 	let t1;
 	let label_for_value;
 	let t2;
@@ -873,12 +875,12 @@ function create_each_block(key_1, ctx) {
 
 	doc = new Doc({
 			props: {
-				path: `fields/${/*key*/ ctx[30]}`,
+				path: `fields/${/*key*/ ctx[31]}`,
 				$$slots: {
 					default: [
 						create_default_slot,
-						({ data }) => ({ 34: data }),
-						({ data }) => [0, data ? 8 : 0]
+						({ data }) => ({ 35: data }),
+						({ data }) => [0, data ? 16 : 0]
 					]
 				},
 				$$scope: { ctx }
@@ -895,7 +897,7 @@ function create_each_block(key_1, ctx) {
 			t1 = text(t1_value);
 			t2 = space();
 			create_component(doc.$$.fragment);
-			attr(label, "for", label_for_value = "feature-" + /*key*/ ctx[30]);
+			attr(label, "for", label_for_value = "feature-" + /*key*/ ctx[31]);
 			attr(label, "class", "label svelte-4ngngh");
 			attr(div, "class", "col-span-full");
 			this.first = div;
@@ -911,16 +913,16 @@ function create_each_block(key_1, ctx) {
 		},
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
-			if ((!current || dirty[0] & /*values*/ 2) && t1_value !== (t1_value = /*values*/ ctx[1].features[/*key*/ ctx[30]].name + "")) set_data(t1, t1_value);
+			if ((!current || dirty[0] & /*values*/ 2) && t1_value !== (t1_value = /*values*/ ctx[1].features[/*key*/ ctx[31]].name + "")) set_data(t1, t1_value);
 
-			if (!current || dirty[0] & /*values*/ 2 && label_for_value !== (label_for_value = "feature-" + /*key*/ ctx[30])) {
+			if (!current || dirty[0] & /*values*/ 2 && label_for_value !== (label_for_value = "feature-" + /*key*/ ctx[31])) {
 				attr(label, "for", label_for_value);
 			}
 
 			const doc_changes = {};
-			if (dirty[0] & /*values*/ 2) doc_changes.path = `fields/${/*key*/ ctx[30]}`;
+			if (dirty[0] & /*values*/ 2) doc_changes.path = `fields/${/*key*/ ctx[31]}`;
 
-			if (dirty[0] & /*values*/ 2 | dirty[1] & /*$$scope, data*/ 136) {
+			if (dirty[0] & /*values*/ 2 | dirty[1] & /*$$scope, data*/ 272) {
 				doc_changes.$$scope = { dirty, ctx };
 			}
 
@@ -1024,13 +1026,13 @@ function instance($$self, $$props, $$invalidate) {
 	let { isNew = false } = $$props;
 	let { selectedProduct = null } = $$props;
 	const newOrderInfo = getContext('newOrderInfo');
-	component_subscribe($$self, newOrderInfo, value => $$invalidate(26, $newOrderInfo = value));
+	component_subscribe($$self, newOrderInfo, value => $$invalidate(27, $newOrderInfo = value));
 	const newOrderReady = getContext('newOrderReady');
-	component_subscribe($$self, newOrderReady, value => $$invalidate(24, $newOrderReady = value));
+	component_subscribe($$self, newOrderReady, value => $$invalidate(25, $newOrderReady = value));
 	const orderEditReady = getContext('orderEditReady');
-	component_subscribe($$self, orderEditReady, value => $$invalidate(25, $orderEditReady = value));
+	component_subscribe($$self, orderEditReady, value => $$invalidate(26, $orderEditReady = value));
 	const orderEditIndex = getContext('orderEditIndex');
-	component_subscribe($$self, orderEditIndex, value => $$invalidate(27, $orderEditIndex = value));
+	component_subscribe($$self, orderEditIndex, value => $$invalidate(28, $orderEditIndex = value));
 
 	let values = {
 		id: null,
@@ -1041,6 +1043,7 @@ function instance($$self, $$props, $$invalidate) {
 
 	let featureItems = {};
 	let selectedFeatures = [];
+	let selectedEdit = false;
 
 	// Input masks
 	const ambientOptions = { mask: /^[A-Za-zÀ-ÖØ-öø-ÿ0-9\(\)\-\s]+$/ };
@@ -1066,15 +1069,15 @@ function instance($$self, $$props, $$invalidate) {
 		values = { ...$newOrderInfo };
 	}
 
-	console.log(selectedFeatures);
+	if (values.features !== $newOrderInfo.features) {
+		selectedEdit = true;
+	}
 
 	// Helpers
 	const { close } = getContext('simple-modal');
 
 	const deselectProduct = () => {
 		$$invalidate(0, selectedProduct = null);
-		$$invalidate(2, selectedFeatures = []);
-		$$invalidate(1, values.features = {}, values);
 		$$invalidate(1, values = { ...values });
 	};
 
@@ -1107,18 +1110,23 @@ function instance($$self, $$props, $$invalidate) {
 			return;
 		}
 
-		for (let feature of Object.values(values.features)) {
-			if (feature.value === '') {
-				alert(`Informe o valor do atributo "${feature.name}"!`);
-				return;
-			}
-		}
-
+		// if (is_empty(selectedFeatures)) {
+		//   alert('Informe algum atributo!');
+		//   return;
+		// }
+		// for (let feature of Object.values(values.features)) {
+		//   if (feature.value === '') {
+		//     alert(`Informe o valor do atributo "${feature.name}"!`);
+		//     return;
+		//   }
+		// }
 		$$invalidate(1, values.id = selectedProduct.id, values);
 
-		db.collection('products').doc(values.id).update({ features: selectedFeatures }).catch(err => {
-			alert(`Erro ao atualizar produto: ${err}`);
-		});
+		if (!is_empty(selectedFeatures)) {
+			db.collection('products').doc(values.id).update({ features: selectedFeatures }).catch(err => {
+				alert(`Erro ao atualizar produto: ${err}`);
+			});
+		}
 
 		set_store_value(newOrderInfo, $newOrderInfo = { ...values }, $newOrderInfo);
 
@@ -1139,13 +1147,13 @@ function instance($$self, $$props, $$invalidate) {
 	function inputmask_value_binding(value) {
 		if ($$self.$$.not_equal(values.ambient, value)) {
 			values.ambient = value;
-			(($$invalidate(1, values), $$invalidate(0, selectedProduct)), $$invalidate(2, selectedFeatures));
+			((($$invalidate(1, values), $$invalidate(0, selectedProduct)), $$invalidate(17, selectedEdit)), $$invalidate(2, selectedFeatures));
 		}
 	}
 
 	function input_input_handler() {
 		values.count = to_number(this.value);
-		(($$invalidate(1, values), $$invalidate(0, selectedProduct)), $$invalidate(2, selectedFeatures));
+		((($$invalidate(1, values), $$invalidate(0, selectedProduct)), $$invalidate(17, selectedEdit)), $$invalidate(2, selectedFeatures));
 	}
 
 	function multiselect_items_binding(value) {
@@ -1155,13 +1163,13 @@ function instance($$self, $$props, $$invalidate) {
 
 	function multiselect_selected_binding(value) {
 		selectedFeatures = value;
-		(($$invalidate(2, selectedFeatures), $$invalidate(0, selectedProduct)), $$invalidate(1, values));
+		((($$invalidate(2, selectedFeatures), $$invalidate(0, selectedProduct)), $$invalidate(1, values)), $$invalidate(17, selectedEdit));
 	}
 
 	function inputmask_value_binding_1(value, key) {
 		if ($$self.$$.not_equal(values.features[key].value, value)) {
 			values.features[key].value = value;
-			(($$invalidate(1, values), $$invalidate(0, selectedProduct)), $$invalidate(2, selectedFeatures));
+			((($$invalidate(1, values), $$invalidate(0, selectedProduct)), $$invalidate(17, selectedEdit)), $$invalidate(2, selectedFeatures));
 		}
 	}
 
@@ -1175,7 +1183,24 @@ function instance($$self, $$props, $$invalidate) {
 	};
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty[0] & /*selectedProduct, values, selectedFeatures*/ 7) {
+		if ($$self.$$.dirty[0] & /*selectedProduct, values, selectedEdit*/ 131075) {
+			$: if (selectedProduct !== null && Object.keys(values.features).length !== 0) {
+				// Fetch feature for the selected product
+				db.collection('products').doc(selectedProduct.id).get().then(async doc => {
+					const product = doc.data();
+					const features = product.features;
+
+					if (Object.values(features).length !== 0 && selectedEdit === false) {
+						$$invalidate(2, selectedFeatures = [...Object.values(product.features)]);
+						$$invalidate(17, selectedEdit = true);
+					}
+
+					$$invalidate(1, values = { ...values });
+				});
+			}
+		}
+
+		if ($$self.$$.dirty[0] & /*selectedProduct, values, selectedFeatures, selectedEdit*/ 131079) {
 			$: if (selectedProduct !== null && Object.keys(values.features).length === 0) {
 				// Fetch feature for the selected product
 				db.collection('products').doc(selectedProduct.id).get().then(async doc => {
@@ -1189,14 +1214,15 @@ function instance($$self, $$props, $$invalidate) {
 						$$invalidate(1, values.features[feature] = { name: featureDoc.data().name, value: '' }, values);
 					}
 
-					// Fetch selected features
-					$$invalidate(2, selectedFeatures = [...Object.values(product.features)]);
+					if (selectedFeatures.length === 0 && selectedEdit === true) {
+						$$invalidate(2, selectedFeatures = [...Object.values(product.features)]);
+					}
 
+					// if(Object.values(features).length !== 0) {
+					//   selectedFeatures = [ ...Object.values(product.features) ];
+					// }
 					$$invalidate(1, values = { ...values });
-					console.log(selectedFeatures);
 				});
-
-				console.log('Updated features:', values.features);
 			}
 		}
 	};
@@ -1219,6 +1245,7 @@ function instance($$self, $$props, $$invalidate) {
 		handleCountChange,
 		handleSubmit,
 		isNew,
+		selectedEdit,
 		productselect_selected_binding,
 		inputmask_value_binding,
 		input_input_handler,

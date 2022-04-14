@@ -27,6 +27,7 @@
   };
   let featureItems = {};
   let selectedFeatures = [];
+  let selectedEdit = false;
 
   // Input masks
   const ambientOptions = {
@@ -56,48 +57,56 @@
     values = { ...$newOrderInfo };
   } 
 
+<<<<<<< HEAD
+=======
+  if (values.features !== $newOrderInfo.features) {
+    selectedEdit = true;
+  }
+
+>>>>>>> 28627d1445c3918da9d3f9f92bf3a5603d46a2c5
   $: if (selectedProduct !== null && Object.keys(values.features).length === 0) {
     
     // Fetch feature for the selected product
-    db
-      .collection('products')
+    db.collection('products')
       .doc(selectedProduct.id)
       .get()
       .then(async doc => {
         const product = doc.data();
         const features = product.features;
-
         for (let feature of features) {
           // Fetch the feature name from firebase
           const featureDoc = await db
             .collection('fields')
             .doc(feature)
             .get();
-
           values.features[feature] = {
             name: featureDoc.data().name,
             value: ''
           };
           
         }
-
-        if(Object.values(features).length !== 0) {
-          selectedFeatures = [ ...Object.values(product.features) ];
+        if (selectedFeatures.length === 0 && selectedEdit === true) {
+          selectedFeatures = [...Object.values(product.features)];
         }
-
+        // if(Object.values(features).length !== 0) {
+        //   selectedFeatures = [ ...Object.values(product.features) ];
+        // }
         values = { ...values };
 
       });
-  } else if (selectedProduct !== null) {
+  }
+
+  $: if (selectedProduct !== null && Object.keys(values.features).length !== 0) {
+
     // Fetch feature for the selected product
-    db
-      .collection('products')
+    db.collection('products')
       .doc(selectedProduct.id)
       .get()
       .then(async doc => {
         const product = doc.data();
         const features = product.features;
 
+<<<<<<< HEAD
         for (let feature of features) {
           // Fetch the feature name from firebase
           const featureDoc = await db
@@ -122,15 +131,24 @@
           selectedFeatures = Array.from(new Set(selectedFeatures.concat(...Object.values(features))));
         } else {
           console.log('select:   ',select);
+=======
+        if(Object.values(features).length !== 0 && selectedEdit === false) {
+          selectedFeatures = [ ...Object.values(product.features) ];
+          selectedEdit = true;
+>>>>>>> 28627d1445c3918da9d3f9f92bf3a5603d46a2c5
         }
-
         values = { ...values };
+<<<<<<< HEAD
     });
+=======
+
+      });
+>>>>>>> 28627d1445c3918da9d3f9f92bf3a5603d46a2c5
   }
 
 
   // Helpers
-  const { close } = getContext('simple-modal');
+  const { close, } = getContext('simple-modal');
 
   const deselectProduct = () => {
     selectedProduct = null;
@@ -172,10 +190,10 @@
       return;
     }
 
-    if (is_empty(selectedFeatures)) {
-      alert('Informe algum atributo!');
-      return;
-    }
+    // if (is_empty(selectedFeatures)) {
+    //   alert('Informe algum atributo!');
+    //   return;
+    // }
 
     // for (let feature of Object.values(values.features)) {
     //   if (feature.value === '') {
@@ -209,10 +227,6 @@
     close();
   };
 
-  function teste(testando) {
-
-    console.log('testando target: ',testando.target);
-  }
 </script>
 
 <div class="flex items-center w-full pt-8">
@@ -297,6 +311,7 @@
       <div class="col-span-full">
         <label for="features" class="label">Atributos</label>
         <!-- svelte-ignore missing-declaration -->
+        
         <Multiselect
           title="Selecione um ou mais atributos"
           bind:items={featureItems}

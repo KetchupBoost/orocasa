@@ -335,7 +335,7 @@
 
   <!-- Intro -->
   <div
-    class="flex items-end justify-center w-screen h-screen rellax intro {heroTransition && 'opacity-70'}"
+    class="flex items-end justify-center w-screen h-screen rellax intro  "
     style="background-image: url({heroImages.length > 0 ? heroImages[heroIndex].url : ''});"
     data-rellax-speed="-8"
   >

@@ -56,8 +56,6 @@
     values = { ...$newOrderInfo };
   } 
 
-  console.log('values features: ', values);
-
   $: if (selectedProduct !== null && Object.keys(values.features).length === 0) {
     
     // Fetch feature for the selected product
@@ -119,6 +117,7 @@
         // } else {
         //   console.log('select:   ',select);
         // }
+
         if(select === true){
           selectedFeatures = Array.from(new Set(selectedFeatures.concat(...Object.values(features))));
         } else {
@@ -126,8 +125,9 @@
         }
 
         values = { ...values };
-
+    });
   }
+
 
   // Helpers
   const { close } = getContext('simple-modal');
